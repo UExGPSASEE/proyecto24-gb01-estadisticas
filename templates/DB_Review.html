@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mt-5 mb-5"> MedifliStats - Reviews</h1>
+    </div>
+    <div class="container">
+        <div class="row row-col-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2">
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="text-center">Insertar Review</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="/reviews/addReview" method="POST">
+                            <label>Id de la película</label>
+                            <input type="text" class="form-control mb-3" name="Content_id">
+                            <label>Valoración</label>
+                            <input type="number" class="form-control mb-3" name="Valoracion">
+                            <label>Comentario</label>
+                            <input type="text" class="form-control mb-3" name="Comentario">
+                            <label>Perfil</label>
+                            <input type="text" class="form-control mb-3" name="Profile">
+                            <button class="btn btn-primary" type="submit"> Guardar </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
