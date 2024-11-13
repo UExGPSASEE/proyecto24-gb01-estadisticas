@@ -29,6 +29,26 @@
                             <button class="btn btn-primary" type="submit"> Guardar </button>
                         </form>
                     </div>
+                    <div class="card-header">
+                        <h5 class="text-center">Modificar Review</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="/reviews/putReview" method="POST">
+                            <label for="Profile">¿De qué perfil quieres cambiar la valoración?</label>
+                            <input type="text" id="Profile" name="Profile" required>
+                            <br><br>
+                            <label for="Content_id">¿De qué contenido lo quieres modificar?</label>
+                            <input type="text" id="Content_id" name="Content_id" required>
+                            <br><br>
+                            <label for="Valoracion">¿Qué valoración quieres poner?</label>
+                            <input type="text" id="Valoracion" name="Valoracion" required>
+                            <br><br>
+                            <label for="Comentario">¿Qué comentario quieres poner?(Opcional)</label>
+                            <input type="text" id="Comentario" name="Comentario">
+                            <br><br>
+                            <button class="btn btn-primary" type="submit"> Guardar </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
