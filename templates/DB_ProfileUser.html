@@ -17,18 +17,18 @@
                         <h5 class="text-center">Insertar ProfileUser</h5>
                     </div>
                     <div class="card-body">
-                        <form action="/profile-users/profileAdded" method="POST">
+                        <form action="/profiles/profileAdded" method="POST">
                             <label>Nombre del Profile</label>
-                            <input type="text" class="form-control mb-3" name="profileUser" required>
+                            <input type="text" class="form-control mb-3" name="name" required>
                             <br><br>
                             <label>PIN del Profile</label>
-                            <input type="number" class="form-control mb-3" name="pin" max="4" required>
+                            <input type="number" class="form-control mb-3" name="pin" required>
                             <br><br>
                             <label>¿A qué usuario se asocia este perfil?</label>
-                            <input type="text" class="form-control mb-3" name="nameUser">
+                            <input type="number" class="form-control mb-3" name="idUser" required>
                             <br><br>
                             <label>¿Qué idioma quieres usar?</label>
-                            <input type="text" class="form-control mb-3" name="nameLanguage">
+                            <input type="number" class="form-control mb-3" name="idLanguage" required>
                             <br><br>
                             <button class="btn btn-primary" type="submit"> Añadir </button>
                         </form>
@@ -37,19 +37,19 @@
                         <h5 class="text-center">Modificar ProfileUser</h5>
                     </div>
                     <div class="card-body">
-                        <form action="/profile-users/profileUpdated" method="POST">
+                        <form action="/profiles/profileUpdated" method="POST">
                             <input type="hidden" name="method" value="PUT">
                             <label for="idProfile">¿Qué id tiene el Profile que quieres modificar?</label>
                             <input type="number" id="idProfile" name="idProfile" required>
                             <br><br>
                             <label>¿Qué nombre deseas poner?</label>
-                            <input type="text" class="form-control mb-3" name="profileUser">
+                            <input type="text" class="form-control mb-3" name="name" required>
                             <br><br>
                             <label>¿Quieres cambiar la contraseña?</label>
-                            <input type="number" class="form-control mb-3" name="pin" max="4">
+                            <input type="number" class="form-control mb-3" name="pin" required>
                             <br><br>
                             <label>¿A qué idioma quieres cambiar?</label>
-                            <input type="text" class="form-control mb-3" name="nameLanguage">
+                            <input type="number" class="form-control mb-3" name="idLanguage">
                             <br><br>
                             <button class="btn btn-primary" type="submit"> Guardar </button>
                         </form>
@@ -58,7 +58,7 @@
                         <h5 class="text-center">Borrar ProfileUser</h5>
                     </div>
                     <div class="card-body">
-                        <form action="/profile-users/profileDeleted" method="POST">
+                        <form action="/profiles/profileDeleted" method="POST">
                             <input type="hidden" name="method" value="DELETE">
                             <label>¿Qué id tiene el Profile que deseas borrar?</label>
                             <input type="number" id="idProfile" class="form-control mb-3" name="idProfile">
