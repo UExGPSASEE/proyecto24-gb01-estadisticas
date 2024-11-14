@@ -1,4 +1,4 @@
-class profileUser:
+class ProfileUser:
     def __init__(self, idProfileUser, name, pin, idUser, idLanguage):
         self.idProfileUser = idProfileUser
         self.name = name,

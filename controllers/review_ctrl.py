@@ -75,3 +75,25 @@ class ReviewCtrl:
                 return jsonify({'error': 'Review not found or not deleted', 'status': '404 Not Found'}), 404
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+        
+    @staticmethod
+    def getReviewById(db: Collection):
+        idReview = int(request.args.get('idReview'))
+        if idReview:
+            matching_review = db.find({'idReview': idReview})
+            if matching_review:
+                reviewFound = [
+                {
+                    'idReview' : review.get('idReview'),
+                    'rating' : review.get('rating'),
+                    'commentary' : review.get('commentary'),
+                    'idProfileUser' : review.get('idProfileUser'),
+                    'idContent' : review.get('idContent')
+                }
+                for review in matching_review
+                ]
+                return jsonify(reviewFound), 200
+            else:
+                return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
+        else:
+            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
