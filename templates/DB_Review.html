@@ -17,36 +17,49 @@
                         <h5 class="text-center">Insertar Review</h5>
                     </div>
                     <div class="card-body">
-                        <form action="/reviews/addReview" method="POST">
-                            <label>Id de la película</label>
-                            <input type="text" class="form-control mb-3" name="Content_id">
-                            <label>Valoración</label>
-                            <input type="number" class="form-control mb-3" name="Valoracion">
-                            <label>Comentario</label>
-                            <input type="text" class="form-control mb-3" name="Comentario">
-                            <label>Perfil</label>
-                            <input type="text" class="form-control mb-3" name="Profile">
-                            <button class="btn btn-primary" type="submit"> Guardar </button>
+                        <form action="/reviews/reviewAdded" method="POST">
+                            <label>¿Desde qué perfil estás creando la Review?</label>
+                            <input type="number" class="form-control mb-3" name="idProfileUser" required>
+                            <br><br>
+                            <label>¿De qué contenido quieres hacer la Review?</label>
+                            <input type="number" class="form-control mb-3" name="idContent" required>
+                            <br><br>
+                            <label>¿Qué valoración le pones?</label>
+                            <input type="number" class="form-control mb-3" name="rating" max="10" required>
+                            <br><br>
+                            <label>¿Quieres añadir un comentario?</label>
+                            <input type="text" class="form-control mb-3" name="commentary">
+                            <br><br>
+                            <button class="btn btn-primary" type="submit"> Añadir </button>
                         </form>
                     </div>
                     <div class="card-header">
                         <h5 class="text-center">Modificar Review</h5>
                     </div>
                     <div class="card-body">
-                        <form action="/reviews/putReview" method="POST">
-                            <label for="Profile">¿De qué perfil quieres cambiar la valoración?</label>
-                            <input type="text" id="Profile" name="Profile" required>
+                        <form action="/reviews/reviewUpdated" method="POST">
+                            <input type="hidden" name="method" value="PUT">
+                            <label for="idReview">¿Qué id tiene la Review que quieres modificar?</label>
+                            <input type="number" id="idReview" name="idReview" required>
                             <br><br>
-                            <label for="Content_id">¿De qué contenido lo quieres modificar?</label>
-                            <input type="text" id="Content_id" name="Content_id" required>
+                            <label>¿Quieres cambiar la valoración?</label>
+                            <input type="number" class="form-control mb-3" name="rating" max="10" required>
                             <br><br>
-                            <label for="Valoracion">¿Qué valoración quieres poner?</label>
-                            <input type="text" id="Valoracion" name="Valoracion" required>
-                            <br><br>
-                            <label for="Comentario">¿Qué comentario quieres poner?(Opcional)</label>
-                            <input type="text" id="Comentario" name="Comentario">
+                            <label>¿Quieres cambiar el comentario?</label>
+                            <input type="text" class="form-control mb-3" name="commentary">
                             <br><br>
                             <button class="btn btn-primary" type="submit"> Guardar </button>
+                        </form>
+                    </div>
+                    <div class="card-header">
+                        <h5 class="text-center">Borrar Review</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="/reviews/reviewDeleted" method="POST">
+                            <input type="hidden" name="method" value="DELETE">
+                            <label>¿Qué id tiene la Review que deseas borrar?</label>
+                            <input type="number" id="idReview" class="form-control mb-3" name="idReview">
+                            <button class="btn btn-primary" type="submit"> Borrar </button>
                         </form>
                     </div>
                 </div>
