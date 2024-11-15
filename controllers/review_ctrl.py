@@ -33,11 +33,11 @@ class ReviewCtrl:
 
         if idReview:
             if commentary:
-                review = Review(idReview, rating, commentary, idProfileUser, idContent)
+                review = Review(idReview, int(rating), commentary, idProfileUser, idContent)
                 db.insert_one(review.toDBCollection())
                 return redirect(url_for('reviews'))
             else:
-                review = Review(idReview, rating, None, idProfileUser, idContent)
+                review = Review(idReview, int(rating), None, idProfileUser, idContent)
                 db.insert_one(review.toDBCollection())
                 return redirect(url_for('reviews'))
         else:
@@ -46,7 +46,7 @@ class ReviewCtrl:
     @staticmethod
     def putReview(db: Collection):
         idReview = int(request.form.get('idReview'))
-        rating = request.form.get('rating')
+        rating = int(request.form.get('rating'))
         commentary = request.form.get('commentary')
         if idReview and rating and (request.form.get('method') == 'PUT'):
             filter = {'idReview': idReview}
@@ -77,6 +77,21 @@ class ReviewCtrl:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
         
     @staticmethod
+    def getAllReviews(db: Collection):
+        allReviews = db.find()
+        review_list = [
+            {
+                'idReview' : review.get('idReview'),
+                'rating' : review.get('rating'),
+                'commentary' : review.get('commentary'),
+                'idProfileUser' : review.get('idProfileUser'),
+                'idContent' : review.get('idContent')
+            }
+            for review in allReviews
+        ]
+        return jsonify(review_list), 200
+        
+    @staticmethod
     def getReviewById(db: Collection):
         idReview = int(request.args.get('idReview'))
         if idReview:
@@ -97,3 +112,143 @@ class ReviewCtrl:
                 return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+        
+    @staticmethod
+    def getReviewsByIdContent(db: Collection):
+        idContent = request.args.get('idContent')
+        if idContent:
+            matching_review = db.find({'idContent': idContent})
+            if matching_review:
+                review_list = [
+                {
+                    'idReview' : review.get('idReview'),
+                    'rating' : review.get('rating'),
+                    'commentary' : review.get('commentary'),
+                    'idProfileUser' : review.get('idProfileUser'),
+                    'idContent' : review.get('idContent')
+                }
+                for review in matching_review
+                ]
+                return jsonify(review_list), 200
+            else:
+                return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
+        else:
+            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+        
+    @staticmethod
+    def getReviewsByIdProfile(db: Collection):
+        idProfile = request.args.get('idProfileUser')
+        if idProfile:
+            matching_review = db.find({'idProfileUser': idProfile})
+            if matching_review:
+                review_list = [
+                {
+                    'idReview' : review.get('idReview'),
+                    'rating' : review.get('rating'),
+                    'commentary' : review.get('commentary'),
+                    'idProfileUser' : review.get('idProfileUser'),
+                    'idContent' : review.get('idContent')
+                }
+                for review in matching_review
+                ]
+                return jsonify(review_list), 200
+            else:
+                return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
+        else:
+            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+        
+    @staticmethod
+    def getReviewsByRating(db: Collection):
+        rating = int(request.args.get('rating'))
+        if rating:
+            matching_review = db.find({'rating': rating})
+            if matching_review:
+                review_list = [
+                {
+                    'idReview' : review.get('idReview'),
+                    'rating' : review.get('rating'),
+                    'commentary' : review.get('commentary'),
+                    'idProfileUser' : review.get('idProfileUser'),
+                    'idContent' : review.get('idContent')
+                }
+                for review in matching_review
+                ]
+                return jsonify(review_list), 200
+            else:
+                return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
+        else:
+            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+        
+    @staticmethod
+    def getReviewsByMinRating(db: Collection):
+        rating = int(request.args.get('rating'))
+        if rating:
+            matching_review = db.find({'rating': {'$gte': rating}})
+            if matching_review:
+                review_list = [
+                {
+                    'idReview' : review.get('idReview'),
+                    'rating' : review.get('rating'),
+                    'commentary' : review.get('commentary'),
+                    'idProfileUser' : review.get('idProfileUser'),
+                    'idContent' : review.get('idContent')
+                }
+                for review in matching_review
+                ]
+                return jsonify(review_list), 200
+            else:
+                return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
+        else:
+            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+
+    @staticmethod
+    def getReviewsByMaxRating(db: Collection):
+        rating = int(request.args.get('rating'))
+        if rating:
+            matching_review = db.find({'rating': {'$lte': rating}})
+            if matching_review:
+                review_list = [
+                {
+                    'idReview' : review.get('idReview'),
+                    'rating' : review.get('rating'),
+                    'commentary' : review.get('commentary'),
+                    'idProfileUser' : review.get('idProfileUser'),
+                    'idContent' : review.get('idContent')
+                }
+                for review in matching_review
+                ]
+                return jsonify(review_list), 200
+            else:
+                return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
+        else:
+            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+        
+    @staticmethod
+    def getReviewsWithCommentary(db: Collection):
+        allReviewsCommented = db.find({'commentary':{'$exists': True, '$ne': None}})
+        review_list = [
+            {
+                'idReview' : review.get('idReview'),
+                'rating' : review.get('rating'),
+                'commentary' : review.get('commentary'),
+                'idProfileUser' : review.get('idProfileUser'),
+                'idContent' : review.get('idContent')
+            }
+            for review in allReviewsCommented
+        ]
+        return jsonify(review_list), 200
+        
+    @staticmethod
+    def getReviewsWithoutCommentary(db: Collection):
+        allReviewsNotCommented = db.find({'commentary': None})
+        review_list = [
+            {
+                'idReview' : review.get('idReview'),
+                'rating' : review.get('rating'),
+                'commentary' : review.get('commentary'),
+                'idProfileUser' : review.get('idProfileUser'),
+                'idContent' : review.get('idContent')
+            }
+            for review in allReviewsNotCommented
+        ]
+        return jsonify(review_list), 200

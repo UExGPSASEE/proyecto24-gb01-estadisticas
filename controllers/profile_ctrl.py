@@ -26,13 +26,13 @@ class ProfileCtrl:
     @staticmethod
     def addProfile(db: Collection):
         idProfileUser = ProfileCtrl.get_next_sequence_value(db,"idProfileUser")
-        name = str(request.form['name'])
-        pin = int(request.form['pin'])
-        idUser = int(request.form['idUser'])
+        name = request.form['name']
+        pin = request.form['pin']
+        idUser = request.form['idUser']
         idLanguage = request.form['idLanguage']
 
         if idProfileUser:
-            profileUser = ProfileUser(idProfileUser, name, pin, idUser, idLanguage)
+            profileUser = ProfileUser(idProfileUser, str(name), int(pin), int(idUser), int(idLanguage))
             db.insert_one(profileUser.toDBCollection())
             return redirect(url_for('profiles'))
         else:
