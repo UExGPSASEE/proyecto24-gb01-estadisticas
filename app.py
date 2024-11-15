@@ -4,16 +4,16 @@ from controllers.language_ctrl import LanguageCtrl
 from controllers.review_ctrl import ReviewCtrl
 from controllers.profile_ctrl import ProfileCtrl
 from controllers.user_ctrl import UserCtrl
-#from controllers.view_ctrl import ViewsCtrl
+from controllers.view_ctrl import ViewsCtrl
 
 db = dbase.conexionMongoDB()
 
 app = Flask(__name__)
-
+# -------------------------------------------------------------------------------------------------------
 @app.route('/')
 def home():
     return render_template('index.html')
-
+# -------------------------------------------------------------------------------------------------------
 @app.route('/languages')
 def languages():
     languages = db['languages']
@@ -31,7 +31,7 @@ def putLanguage():
 @app.route('/languages/languageDeleted', methods=['POST'])
 def deleteLanguage():
     return LanguageCtrl.deleteLanguage(db['languages'])
-
+# -------------------------------------------------------------------------------------------------------
 @app.route('/reviews')
 def reviews():
     reviews = db['reviews']
@@ -50,10 +50,42 @@ def putReview():
 def deleteReview():
     return ReviewCtrl.deleteReview(db['reviews'])
 
+@app.route('/reviews/reviewsListed', methods=['GET'])
+def getAllReviews():
+    return ReviewCtrl.getAllReviews(db['reviews'])
+
 @app.route('/reviews/reviewFound', methods=['GET'])
 def getReviewById():
     return ReviewCtrl.getReviewById(db['reviews'])
 
+@app.route('/reviews/reviewsByIdContent', methods=['GET'])
+def getReviewsByIdContent():
+    return ReviewCtrl.getReviewsByIdContent(db['reviews'])
+
+@app.route('/reviews/reviewsByIdProfile', methods=['GET'])
+def getReviewsByIdProfile():
+    return ReviewCtrl.getReviewsByIdProfile(db['reviews'])
+
+@app.route('/reviews/reviewsByRating', methods=['GET'])
+def getReviewsByRating():
+    return ReviewCtrl.getReviewsByRating(db['reviews'])
+
+@app.route('/reviews/reviewsByMinRating', methods=['GET'])
+def getReviewsByMinRating():
+    return ReviewCtrl.getReviewsByMinRating(db['reviews'])
+
+@app.route('/reviews/reviewsByMaxRating', methods=['GET'])
+def getReviewsByMaxRating():
+    return ReviewCtrl.getReviewsByMaxRating(db['reviews'])
+
+@app.route('/reviews/reviewsWithCommentary', methods=['GET'])
+def getReviewsWithCommentary():
+    return ReviewCtrl.getReviewsWithCommentary(db['reviews'])
+
+@app.route('/reviews/reviewsWithoutCommentary', methods=['GET'])
+def getReviewsWithoutCommentary():
+    return ReviewCtrl.getReviewsWithoutCommentary(db['reviews'])
+# -------------------------------------------------------------------------------------------------------
 @app.route('/profiles')
 def profiles():
     profiles = db['profiles']
@@ -71,7 +103,7 @@ def putProfile():
 @app.route('/profiles/profileDeleted', methods=['POST'])
 def deleteProfile():
     return ProfileCtrl.deleteProfile(db['profiles'])
-
+# -------------------------------------------------------------------------------------------------------
 @app.route('/users')
 def users():
     users = db['users']
@@ -89,6 +121,24 @@ def putUser():
 @app.route('/users/userDeleted', methods=['POST'])
 def deleteUser():
     return UserCtrl.deleteUser(db['users'])
+# -------------------------------------------------------------------------------------------------------
+@app.route('/views')
+def views():
+    views = db['views']
+    viewsReceived = views.find()
+    return render_template('DB_Views.html', views=viewsReceived)
 
+@app.route('/views/viewAdded', methods=['POST'])
+def addView():
+    return ViewsCtrl.addView(db['views'])
+
+@app.route('/views/viewUpdated', methods=['POST'])
+def putView():
+    return ViewsCtrl.putView(db['views'])
+
+@app.route('/views/viewDeleted', methods=['POST'])
+def deleteView():
+    return ViewsCtrl.deleteView(db['views'])
+# -------------------------------------------------------------------------------------------------------
 if __name__ == '__main__':
     app.run(debug=True, port=8083)
