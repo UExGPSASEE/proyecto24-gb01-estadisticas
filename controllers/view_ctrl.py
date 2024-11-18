@@ -1,31 +1,17 @@
 from flask import render_template, request, jsonify, redirect, url_for
 from pymongo.collection import Collection
 from models.views import View
+from database import get_next_sequence_value as get_next_sequence_value
 
 class ViewsCtrl:
     @staticmethod
     def render_template(db: Collection):
         viewsReceived = db.find()
         return render_template('DB_Views.html', views=viewsReceived)
-    
-    @staticmethod        
-    def get_next_sequence_value(db: Collection, sequence_name):        
-        counter = db.find_one({"_id": sequence_name})
-
-        if counter is None:       
-            db.insert_one({"_id": sequence_name, "sequence_value": 1})
-            return 1
-        
-        updated_counter = db.find_one_and_update(
-            {"_id": sequence_name},
-            {"$inc": {"sequence_value": 1}},
-            return_document=True
-        )
-        return updated_counter["sequence_value"]
 
     @staticmethod
     def addView(db: Collection):
-        idView = ViewsCtrl.get_next_sequence_value(db,"idView")
+        idView = get_next_sequence_value(db,"idView")
         dateInit = request.form['dateInit']
         dateFinish = request.form['dateFinish']
         idContent = request.form['idContent']
