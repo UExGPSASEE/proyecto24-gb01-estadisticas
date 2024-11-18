@@ -1,6 +1,7 @@
 from flask import render_template, request, jsonify, redirect, url_for
 from pymongo.collection import Collection
 from models.profileUser import ProfileUser
+from database import get_next_sequence_value as get_next_sequence_value
 
 class ProfileCtrl:
     @staticmethod
@@ -8,24 +9,9 @@ class ProfileCtrl:
         profilesReceived = db.find()
         return render_template('DB_ProfileUser.html', profiles=profilesReceived)
 
-    @staticmethod        
-    def get_next_sequence_value(db: Collection, sequence_name):        
-        counter = db.find_one({"_id": sequence_name})
-
-        if counter is None:       
-            db.insert_one({"_id": sequence_name, "sequence_value": 1})
-            return 1
-        
-        updated_counter = db.find_one_and_update(
-            {"_id": sequence_name},
-            {"$inc": {"sequence_value": 1}},
-            return_document=True
-        )
-        return updated_counter["sequence_value"]
-
     @staticmethod
     def addProfile(db: Collection):
-        idProfileUser = ProfileCtrl.get_next_sequence_value(db,"idProfileUser")
+        idProfileUser = get_next_sequence_value(db,"idProfileUser")
         name = request.form['name']
         pin = request.form['pin']
         idUser = request.form['idUser']
