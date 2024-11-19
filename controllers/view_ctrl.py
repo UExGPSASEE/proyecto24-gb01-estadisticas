@@ -2,6 +2,8 @@ from flask import render_template, request, jsonify, redirect, url_for
 from pymongo.collection import Collection
 from models.views import View
 from database import get_next_sequence_value as get_next_sequence_value
+import matplotlib as plt
+import io
 
 class ViewsCtrl:
     @staticmethod
@@ -56,3 +58,112 @@ class ViewsCtrl:
                 return jsonify({'error': 'View not found or not deleted', 'status': '404 Not Found'}), 404
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+           
+    @staticmethod
+    def getAllViews(db: Collection):
+        allViews = db.find()
+        view_list = [
+            {
+                'idView' : view.get('idView'),
+                'dateInit' : view.get('dateInit'),
+                'isFinished' : view.get('isFinished'),
+                'dateFinish' : view.get('dateFinish'),
+                'idContent' : view.get('idContent'),
+                'idProfile' : view.get('idProfile')
+            }
+            for view in allViews
+        ]
+        return jsonify(view_list), 200
+        
+    @staticmethod
+    def getViewById(db: Collection):
+        idView = int(request.args.get('idView'))
+        if idView:
+            matching_view = db.find({'idView': idView})
+            if matching_view:
+                viewFound = [
+                {
+                    'idView' : view.get('idView'),
+                    'dateInit' : view.get('dateInit'),
+                    'isFinished' : view.get('isFinished'),
+                    'dateFinish' : view.get('dateFinish'),
+                    'idContent' : view.get('idContent'),
+                    'idProfile' : view.get('idProfile')
+                }
+                for view in matching_view
+                ]
+                return jsonify(viewFound), 200
+            else:
+                return jsonify({'error': 'View not found', 'status': '404 Not Found'}), 404
+        else:
+            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+        
+    @staticmethod
+    def getViewsByIdContent(db: Collection):
+        idContent = request.args.get('idContent')
+        if idContent:
+            matching_view = db.find({'idContent': idContent})
+            if matching_view:
+                view_list = [
+                {
+                    'idView' : view.get('idView'),
+                    'dateInit' : view.get('dateInit'),
+                    'isFinished' : view.get('isFinished'),
+                    'dateFinish' : view.get('dateFinish'),
+                    'idContent' : view.get('idContent'),
+                    'idProfile' : view.get('idProfile')
+                }
+                for view in matching_view
+                ]
+                return jsonify(view_list), 200
+            else:
+                return jsonify({'error': 'View not found', 'status': '404 Not Found'}), 404
+        else:
+            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+        
+    @staticmethod
+    def getViewsByIdProfile(db: Collection):
+        idProfile = request.args.get('idProfile')
+        if idProfile:
+            matching_view = db.find({'idProfile': idProfile})
+            if matching_view:
+                view_list = [
+                {
+                    'idView' : view.get('idView'),
+                    'dateInit' : view.get('dateInit'),
+                    'isFinished' : view.get('isFinished'),
+                    'dateFinish' : view.get('dateFinish'),
+                    'idContent' : view.get('idContent'),
+                    'idProfile' : view.get('idProfile')
+                }
+                for view in matching_view
+                ]
+                return jsonify(view_list), 200
+            else:
+                return jsonify({'error': 'View not found', 'status': '404 Not Found'}), 404
+        else:
+            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+        
+    @staticmethod
+    def getStatsView(db: Collection):
+        idContent = request.args.get('idContent')
+        if idContent:
+            matching_view = db.find({'idContent': idContent})
+            if matching_view:
+                view_list = [
+                {
+                    'idView' : view.get('idView'),
+                    'dateInit' : view.get('dateInit'),
+                    'isFinished' : view.get('isFinished'),
+                    'dateFinish' : view.get('dateFinish'),
+                    'idContent' : view.get('idContent'),
+                    'idProfile' : view.get('idProfile')
+                }
+                for view in matching_view
+                ]
+                return jsonify(len(view_list)), 200
+            else:
+                return jsonify({'error': 'View not found', 'status': '404 Not Found'}), 404
+        else:
+            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+        
