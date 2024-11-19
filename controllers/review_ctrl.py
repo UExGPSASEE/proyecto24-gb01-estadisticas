@@ -238,3 +238,25 @@ class ReviewCtrl:
             for review in allReviewsNotCommented
         ]
         return jsonify(review_list), 200
+    
+    @staticmethod
+    def getStatsReview(db: Collection):
+        idContent = request.args.get('idContent')
+        if idContent:
+            matching_review = db.find({'idContent': idContent})
+            if matching_review:
+                review_list = [
+                {
+                    'idReview' : review.get('idReview'),
+                    'rating' : review.get('rating'),
+                    'commentary' : review.get('commentary'),
+                    'idProfileUser' : review.get('idProfileUser'),
+                    'idContent' : review.get('idContent')
+                }
+                for review in matching_review
+                ]
+                return jsonify(len(review_list)), 200
+            else:
+                return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
+        else:
+            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400

@@ -131,6 +131,16 @@
                             <button class="btn btn-primary" type="submit"> Buscar </button>
                         </form>
                     </div>
+                    <div class="card-header">
+                        <h3 class="text-center">Obtener estadísticas de Reviews</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="/reviews/stats" method="GET">
+                            <label>¿Sobre qué contenido deseas buscar la Review?</label>
+                            <input type="number" class="form-control mb-3" name="idContent" required>
+                            <button class="btn btn-primary" type="submit"> Buscar </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
