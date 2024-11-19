@@ -85,6 +85,10 @@ def getReviewsWithCommentary():
 @app.route('/reviews/reviewsWithoutCommentary', methods=['GET'])
 def getReviewsWithoutCommentary():
     return ReviewCtrl.getReviewsWithoutCommentary(db['reviews'])
+
+@app.route('/reviews/stats', methods=['GET'])
+def getStatsReview():
+    return ReviewCtrl.getStatsReview(db['reviews'])
 # -------------------------------------------------------------------------------------------------------
 @app.route('/profiles')
 def profiles():
