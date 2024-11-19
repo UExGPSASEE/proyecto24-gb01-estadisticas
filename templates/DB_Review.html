@@ -63,7 +63,7 @@
                         </form>
                     </div>
                     <div class="card-header">
-                        <h3 class="text-center">Obtener Review por su Id</h3>
+                        <h3 class="text-center">Obtener Todas las Reviews</h3>
                     </div>
                     <div class="card-body">
                         <form action="/reviews/reviewsListed" method="GET">
@@ -71,12 +71,18 @@
                             <button class="btn btn-primary" type="submit"> Buscar </button>
                         </form>
                     </div>
+                    <div class="card-header">
+                        <h3 class="text-center">Obtener Review por Id</h3>
+                    </div>
                     <div class="card-body">
                         <form action="/reviews/reviewFound" method="GET">
                             <label>¿Qué Review deseas buscar?</label>
                             <input type="number" class="form-control mb-3" name="idReview" required>
                             <button class="btn btn-primary" type="submit"> Buscar </button>
                         </form>
+                    </div>
+                    <div class="card-header">
+                        <h3 class="text-center">Resto de búsquedas de reviews</h3>
                     </div>
                     <div class="card-body">
                         <form action="/reviews/reviewsByIdContent" method="GET">

@@ -139,6 +139,26 @@ def putView():
 @app.route('/views/viewDeleted', methods=['POST'])
 def deleteView():
     return ViewsCtrl.deleteView(db['views'])
+
+@app.route('/views/viewsListed', methods=['GET'])
+def getAllViews():
+    return ViewsCtrl.getAllViews(db['views'])
+
+@app.route('/views/viewFound', methods=['GET'])
+def getViewById():
+    return ViewsCtrl.getViewById(db['views'])
+
+@app.route('/views/viewsByIdContent', methods=['GET'])
+def getViewsByIdContent():
+    return ViewsCtrl.getViewsByIdContent(db['views'])
+
+@app.route('/views/viewsByIdProfile', methods=['GET'])
+def getViewsByIdProfile():
+    return ViewsCtrl.getViewsByIdProfile(db['views'])
+
+@app.route('/views/stats', methods=['GET'])
+def getStatsView():
+    return ViewsCtrl.getStatsView(db['views'])
 # -------------------------------------------------------------------------------------------------------
 if __name__ == '__main__':
     app.run(debug=True, port=8083)

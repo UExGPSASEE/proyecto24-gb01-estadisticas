@@ -59,6 +59,52 @@
                             <button class="btn btn-primary" type="submit"> Borrar </button>
                         </form>
                     </div>
+                    <div class="card-header">
+                        <h3 class="text-center">Obtener Todas las Views</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="/views/viewsListed" method="GET">
+                            <label>Listar todas las views</label>
+                            <button class="btn btn-primary" type="submit"> Buscar </button>
+                        </form>
+                    </div>
+                    <div class="card-header">
+                        <h3 class="text-center">Obtener View por Id</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="/views/viewFound" method="GET">
+                            <label>¿Qué view deseas buscar?</label>
+                            <input type="number" class="form-control mb-3" name="idView" required>
+                            <button class="btn btn-primary" type="submit"> Buscar </button>
+                        </form>
+                    </div>
+                    <div class="card-header">
+                        <h3 class="text-center">Resto de búsquedas de Views</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="/views/viewsByIdContent" method="GET">
+                            <label>¿Sobre qué contenido deseas buscar la View?</label>
+                            <input type="number" class="form-control mb-3" name="idContent" required>
+                            <button class="btn btn-primary" type="submit"> Buscar </button>
+                        </form>
+                    </div>
+                    <div class="card-body">
+                        <form action="/views/viewsByIdProfile" method="GET">
+                            <label>¿Sobre qué perfil deseas buscar la View?</label>
+                            <input type="number" class="form-control mb-3" name="idProfile" required>
+                            <button class="btn btn-primary" type="submit"> Buscar </button>
+                        </form>
+                    </div>
+                    <div class="card-header">
+                        <h3 class="text-center">Obtener estadísticas de Views</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="/views/stats" method="GET">
+                            <label>¿Sobre qué contenido deseas buscar la View?</label>
+                            <input type="number" class="form-control mb-3" name="idContent" required>
+                            <button class="btn btn-primary" type="submit"> Buscar </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
