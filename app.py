@@ -1,5 +1,6 @@
 import database as dbase
 from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask_cors import CORS, cross_origin
 from controllers.language_ctrl import LanguageCtrl
 from controllers.review_ctrl import ReviewCtrl
 from controllers.profile_ctrl import ProfileCtrl
@@ -9,6 +10,9 @@ from controllers.view_ctrl import ViewsCtrl
 db = dbase.conexionMongoDB()
 
 app = Flask(__name__)
+
+# CORS(app)
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})  # CORS restringido al origen React
 # -------------------------------------------------------------------------------------------------------
 @app.route('/')
 def home():
@@ -20,17 +24,25 @@ def languages():
     languagesReceived = languages.find()
     return render_template('DB_Language.html', languages=languagesReceived)
 
-@app.route('/languages/languageAdded', methods=['POST'])
+@app.route('/languages', methods=['POST'])
 def addLanguage():
     return LanguageCtrl.addLanguage(db['languages'])
 
-@app.route('/languages/languageUpdated', methods=['POST'])
+@app.route('/languages', methods=['PUT'])
+def putLanguageForm():
+    return LanguageCtrl.putLanguageForm(db['languages'])
+
+@app.route('/languages/<idLanguage>', methods=['PUT'])
 def putLanguage():
     return LanguageCtrl.putLanguage(db['languages'])
 
-@app.route('/languages/languageDeleted', methods=['POST'])
+@app.route('/languages/<idLanguage>', methods=['DELETE'])
 def deleteLanguage():
     return LanguageCtrl.deleteLanguage(db['languages'])
+
+@app.route('/languages', methods=['DELETE'])
+def deleteLanguageForm():
+    return LanguageCtrl.deleteLanguageForm(db['languages'])
 # -------------------------------------------------------------------------------------------------------
 @app.route('/reviews')
 def reviews():
