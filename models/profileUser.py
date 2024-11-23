@@ -7,10 +7,10 @@ class ProfileUser:
         self.idLanguage = idLanguage
 
     def toDBCollection(self):
-        return{
-            'idProfileUser' : self.idProfileUser,
-            'name' : self.name,
-            'pin' : self.pin,
-            'idUser' : self.idUser,
-            'idLanguage' : self.idLanguage
+        return {
+            'idProfileUser': self.idProfileUser,
+            'name': self.name,
+            'pin': self.pin,
+            'idUser': self.idUser,
+            'idLanguage': self.idLanguage
         }

@@ -1,7 +1,9 @@
 from flask import render_template, request, jsonify, redirect, url_for
 from pymongo.collection import Collection
-from models.user import User
+
 from database import get_next_sequence_value as get_next_sequence_value
+from models.user import User
+
 
 class UserCtrl:
     @staticmethod
@@ -11,7 +13,7 @@ class UserCtrl:
 
     @staticmethod
     def addUser(db: Collection):
-        idUser = get_next_sequence_value(db,"idUser")
+        idUser = get_next_sequence_value(db, "idUser")
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
@@ -21,7 +23,7 @@ class UserCtrl:
             db.insert_one(user.toDBCollection())
             return redirect(url_for('users'))
         else:
-            return jsonify({'error': 'User not found or not added', 'status':'404 Not Found'}), 404
+            return jsonify({'error': 'User not found or not added', 'status': '404 Not Found'}), 404
 
     @staticmethod
     def putUser(db: Collection):
@@ -31,10 +33,10 @@ class UserCtrl:
         password = request.form.get('password')
         if idUser and (request.form.get('method') == 'PUT'):
             filter = {'idUser': idUser}
-            change = {'$set': {'username': username, 'email': email, 'password':password}}
+            change = {'$set': {'username': username, 'email': email, 'password': password}}
             result = db.update_one(filter, change)
             if result.matched_count == 0:
-                return jsonify({'error': 'User not found or not updated', 'status':'404 Not Found'}), 404
+                return jsonify({'error': 'User not found or not updated', 'status': '404 Not Found'}), 404
             elif result.modified_count == 0:
                 return jsonify({'message': 'New user matches with actual user', 'status': '200 OK'}), 200
             return redirect(url_for('users'))

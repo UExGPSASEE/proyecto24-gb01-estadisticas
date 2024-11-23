@@ -8,11 +8,11 @@ class View:
         self.idProfile = idProfile
 
     def toDBCollection(self):
-        return{
-            'idView' : self.idView,
-            'dateInit' : self.dateInit,
-            'isFinished' : self.isFinished,
-            'dateFinish' : self.dateFinish,
-            'idContent' : self.idContent,
-            'idProfile' : self.idProfile
+        return {
+            'idView': self.idView,
+            'dateInit': self.dateInit,
+            'isFinished': self.isFinished,
+            'dateFinish': self.dateFinish,
+            'idContent': self.idContent,
+            'idProfile': self.idProfile
         }

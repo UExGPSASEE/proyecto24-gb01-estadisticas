@@ -6,9 +6,9 @@ class User:
         self.password = password
 
     def toDBCollection(self):
-        return{
-            'idUser' : self.idUser,
-            'username' : self.username,
-            'email' : self.email,
-            'password' : self.password
+        return {
+            'idUser': self.idUser,
+            'username': self.username,
+            'email': self.email,
+            'password': self.password
         }
