@@ -67,7 +67,7 @@ def getLanguageById():
     return LanguageCtrl.getLanguageById(db['languages'])
 
 
-@app.route('/languages/<name>', methods=['GET'])
+@app.route('/languages', methods=['GET'])
 def getLanguageByName():
     return LanguageCtrl.getLanguageByName(db['languages'])
 
@@ -114,27 +114,27 @@ def getReviewById():
     return ReviewCtrl.getReviewById(db['reviews'])
 
 
-@app.route('/reviews/content/<idContent>', methods=['GET'])
+@app.route('/reviews/contents', methods=['GET'])
 def getReviewsByIdContent():
     return ReviewCtrl.getReviewsByIdContent(db['reviews'])
 
 
-@app.route('/reviews/profile/<idProfile>', methods=['GET'])
+@app.route('/reviews/profiles', methods=['GET'])
 def getReviewsByIdProfile():
     return ReviewCtrl.getReviewsByIdProfile(db['reviews'])
 
 
-@app.route('/reviews/rating/<idRating>', methods=['GET'])
+@app.route('/reviews/ratings', methods=['GET'])
 def getReviewsByRating():
     return ReviewCtrl.getReviewsByRating(db['reviews'])
 
 # TODO
-@app.route('/reviews/minrating/<rating>', methods=['GET'])
+@app.route('/reviews/minrating', methods=['GET'])
 def getReviewsByMinRating():
     return ReviewCtrl.getReviewsByMinRating(db['reviews'])
 
 
-@app.route('/reviews/maxrating/<rating>', methods=['GET'])
+@app.route('/reviews/maxrating', methods=['GET'])
 def getReviewsByMaxRating():
     return ReviewCtrl.getReviewsByMaxRating(db['reviews'])
 
@@ -236,12 +236,12 @@ def getViewById():
     return ViewsCtrl.getViewById(db['views'])
 
 
-@app.route('/views/content/<idContent>', methods=['GET'])
+@app.route('/views/contents', methods=['GET'])
 def getViewsByIdContent():
     return ViewsCtrl.getViewsByIdContent(db['views'])
 
 
-@app.route('/views/profile/<idProfile>', methods=['GET'])
+@app.route('/views/profiles', methods=['GET'])
 def getViewsByIdProfile():
     return ViewsCtrl.getViewsByIdProfile(db['views'])
 
