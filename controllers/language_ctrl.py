@@ -67,3 +67,55 @@ class LanguageCtrl:
     def deleteLanguageForm(db: Collection):
         idLanguage = int(request.form.get("idLanguage"))
         return LanguageCtrl.deleteLanguage(db, idLanguage)
+
+    @staticmethod
+    def getAllLanguages(db: Collection):
+        allLanguages = db.find()
+        language_list = [
+            {
+                'idLanguage': language.get('idLanguage'),
+                'name': language.get('name')
+            }
+            for language in allLanguages
+        ]
+        return jsonify(language_list), 200
+
+    @staticmethod
+    def getLanguageById(db: Collection):
+        idLanguage = request.args.get('idLanguage')
+        if idLanguage:
+            idLanguage = int(idLanguage)
+            matching_language = db.find({'idLanguage': idLanguage})
+            if matching_language:
+                languageFound = [
+                    {
+                        'idLanguage': language.get('idLanguage'),
+                        'name': language.get('name')
+                    }
+                    for language in matching_language
+                ]
+                return jsonify(languageFound), 200
+            else:
+                return jsonify({'error': 'Language not found', 'status': '404 Not Found'}), 404
+        else:
+            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+
+    @staticmethod
+    def getLanguageByName(db: Collection):
+        name = request.args.get('name')
+        if name:
+            matching_language = db.find({'name': name})
+            if matching_language:
+                languageFound = [
+                    {
+                        'idLanguage': language.get('idLanguage'),
+                        'name': language.get('name')
+                    }
+                    for language in matching_language
+                ]
+                return jsonify(languageFound), 200
+            else:
+                return jsonify({'error': 'Language not found', 'status': '404 Not Found'}), 404
+        else:
+            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+

@@ -30,27 +30,7 @@
                         <button class="btn btn-primary" type="submit"> Añadir</button>
                     </form>
                 </div>
-                <div class="card-header">
-                    <h5 class="text-center">Modificar User</h5>
-                </div>
-                <div class="card-body">
-                    <form action="/users/userUpdated" method="POST">
-                        <input type="hidden" name="method" value="PUT">
-                        <label for="idUser">¿Qué id tiene el User que quieres modificar?</label>
-                        <input type="number" id="idUser" name="idUser" required>
-                        <br><br>
-                        <label>¿Qué nombre deseas poner?</label>
-                        <input type="text" class="form-control mb-3" name="username" required>
-                        <br><br>
-                        <label>¿Quieres cambiar el email?</label>
-                        <input type="email" class="form-control mb-3" name="email" required>
-                        <br><br>
-                        <label>¿Qué contraseña quieres poner?</label>
-                        <input type="password" class="form-control mb-3" name="password">
-                        <br><br>
-                        <button class="btn btn-primary" type="submit"> Guardar</button>
-                    </form>
-                </div>
+
                 <div class="card-header">
                     <h5 class="text-center">Borrar User</h5>
                 </div>
