@@ -26,6 +26,7 @@ class LanguageCtrl:
     def putLanguage(db: Collection, idLanguage: int):
         name = request.form.get('name')
         if idLanguage and name:
+            idLanguage = int(idLanguage)
             filter = {'idLanguage': idLanguage}
             change = {'$set': {'name': name}}
             result = db.update_one(filter, change)
@@ -50,6 +51,7 @@ class LanguageCtrl:
     @staticmethod
     def deleteLanguage(db: Collection, idLanguage: int):
         if idLanguage:
+            idLanguage = int(idLanguage)
             result = db.delete_one({'idLanguage': idLanguage})
             if result.deleted_count == 1:
                 return redirect(url_for('languages'))
@@ -59,8 +61,7 @@ class LanguageCtrl:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
 
     @staticmethod
-    def deleteLanguageParam(db: Collection):
-        idLanguage = int(request.args.get('idLanguage'))
+    def deleteLanguageParam(db: Collection, idLanguage):
         return LanguageCtrl.deleteLanguage(db, idLanguage)
 
     @staticmethod
@@ -81,8 +82,7 @@ class LanguageCtrl:
         return jsonify(language_list), 200
 
     @staticmethod
-    def getLanguageById(db: Collection):
-        idLanguage = request.args.get('idLanguage')
+    def getLanguageById(db: Collection, idLanguage):
         if idLanguage:
             idLanguage = int(idLanguage)
             matching_language = db.find({'idLanguage': idLanguage})
@@ -118,4 +118,3 @@ class LanguageCtrl:
                 return jsonify({'error': 'Language not found', 'status': '404 Not Found'}), 404
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
-

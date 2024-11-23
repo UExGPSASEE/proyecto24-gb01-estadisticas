@@ -18,6 +18,7 @@ class UserCtrl:
         email = request.form['email']
 
         if idUser:
+            idUser = int(idUser)
             user = User(idUser, username, email)
             db.insert_one(user.toDBCollection())
             return redirect(url_for('users'))
@@ -27,6 +28,7 @@ class UserCtrl:
     @staticmethod
     def deleteUser(db: Collection, idUser: int):
         if idUser:
+            idUser = int(idUser)
             result = db.delete_one({'idUser': idUser})
             if result.deleted_count == 1:
                 return redirect(url_for('users'))
@@ -34,7 +36,6 @@ class UserCtrl:
                 return jsonify({'error': 'User not found or not deleted', 'status': '404 Not Found'}), 404
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
-
 
     @staticmethod
     def deleteUserParam(db: Collection):

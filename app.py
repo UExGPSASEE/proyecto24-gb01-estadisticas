@@ -48,13 +48,13 @@ def deleteLanguageForm():
 
 
 @app.route('/languages/<idLanguage>', methods=['PUT'])
-def putLanguage():
-    return LanguageCtrl.putLanguageParam(db['languages'])
+def putLanguage(idLanguage):
+    return LanguageCtrl.putLanguage(db['languages'], idLanguage)
 
 
 @app.route('/languages/<idLanguage>', methods=['DELETE'])
-def deleteLanguage():
-    return LanguageCtrl.deleteLanguageParam(db['languages'])
+def deleteLanguage(idLanguage):
+    return LanguageCtrl.deleteLanguage(db['languages'], idLanguage)
 
 
 @app.route('/languages/all')
@@ -63,13 +63,14 @@ def getAllLanguages():
 
 
 @app.route('/languages/<idLanguage>', methods=['GET'])
-def getLanguageById():
-    return LanguageCtrl.getLanguageById(db['languages'])
+def getLanguageById(idLanguage):
+    return LanguageCtrl.getLanguageById(db['languages'], idLanguage)
 
 
 @app.route('/languages', methods=['GET'])
 def getLanguageByName():
     return LanguageCtrl.getLanguageByName(db['languages'])
+
 
 # -------------------------------------------------------------------------------------------------------
 
@@ -95,13 +96,13 @@ def deleteReviewForm():
 
 
 @app.route('/reviews/<idReview>', methods=['PUT'])
-def putReview():
-    return ReviewCtrl.putReviewParam(db['reviews'])
+def putReview(idReview):
+    return ReviewCtrl.putReview(db['reviews'], idReview)
 
 
 @app.route('/reviews/<idReview>', methods=['DELETE'])
-def deleteReview():
-    return ReviewCtrl.deleteReviewParam(db['reviews'])
+def deleteReview(idReview):
+    return ReviewCtrl.deleteReview(db['reviews'], idReview)
 
 
 @app.route('/reviews/all', methods=['GET'])
@@ -110,8 +111,8 @@ def getAllReviews():
 
 
 @app.route('/reviews/<idReview>', methods=['GET'])
-def getReviewById():
-    return ReviewCtrl.getReviewById(db['reviews'])
+def getReviewById(idReview):
+    return ReviewCtrl.getReviewById(db['reviews'], idReview)
 
 
 @app.route('/reviews/contents', methods=['GET'])
@@ -127,6 +128,7 @@ def getReviewsByIdProfile():
 @app.route('/reviews/ratings', methods=['GET'])
 def getReviewsByRating():
     return ReviewCtrl.getReviewsByRating(db['reviews'])
+
 
 # TODO
 @app.route('/reviews/minrating', methods=['GET'])
@@ -166,8 +168,9 @@ def addProfile():
 
 
 @app.route('/profiles/<idProfile>', methods=['DELETE'])
-def deleteProfile():
-    return ProfileCtrl.deleteProfileParam(db['profiles'])
+def deleteProfile(idProfile):
+    return ProfileCtrl.deleteProfile(db['profiles'], idProfile)
+
 
 @app.route('/profiles', methods=['DELETE'])
 def deleteProfileForm():
@@ -186,12 +189,14 @@ def addUser():
 
 
 @app.route('/users/<idUser>', methods=['DELETE'])
-def deleteUser():
-    return UserCtrl.deleteUserParam(db['users'])
+def deleteUser(idProfile):
+    return UserCtrl.deleteUser(db['users'], idProfile)
+
 
 @app.route('/users', methods=['DELETE'])
 def deleteUserForm():
     return UserCtrl.deleteUserForm(db['users'])
+
 
 # -------------------------------------------------------------------------------------------------------
 
@@ -217,13 +222,13 @@ def deleteViewForm():
 
 
 @app.route('/views/<idView>', methods=['PUT'])
-def putView():
-    return ViewsCtrl.putViewParam(db['views'])
+def putView(idView):
+    return ViewsCtrl.putView(db['views'], idView)
 
 
 @app.route('/views/<idView>', methods=['DELETE'])
-def deleteView():
-    return ViewsCtrl.deleteViewParam(db['views'])
+def deleteView(idView):
+    return ViewsCtrl.deleteView(db['views'], idView)
 
 
 @app.route('/views/all', methods=['GET'])
@@ -232,8 +237,8 @@ def getAllViews():
 
 
 @app.route('/views/<idView>', methods=['GET'])
-def getViewById():
-    return ViewsCtrl.getViewById(db['views'])
+def getViewById(idView):
+    return ViewsCtrl.getViewById(db['views'], idView)
 
 
 @app.route('/views/contents', methods=['GET'])

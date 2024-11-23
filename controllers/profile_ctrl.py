@@ -19,6 +19,7 @@ class ProfileCtrl:
         idLanguage = request.form.get('idLanguage')
 
         if idProfile:
+            idProfile = int(idProfile)
             profileUser = ProfileUser(idProfile, str(name), int(idUser), int(idLanguage))
             db.insert_one(profileUser.toDBCollection())
             return redirect(url_for('profiles'))
@@ -28,6 +29,7 @@ class ProfileCtrl:
     @staticmethod
     def deleteProfile(db: Collection, idProfile: int):
         if idProfile:
+            idProfile = int(idProfile)
             result = db.delete_one({'idProfile': idProfile})
             if result.deleted_count == 1:
                 return redirect(url_for('profiles'))

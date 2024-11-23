@@ -38,6 +38,7 @@ class ReviewCtrl:
         idProfile = request.form['idProfile']
         idContent = request.form['idContent']
         if idReview:
+            idReview = int(idReview)
             filter = {'idReview': idReview}
 
             updateFields = {}
@@ -73,6 +74,7 @@ class ReviewCtrl:
     @staticmethod
     def deleteReview(db: Collection, idReview: int):
         if idReview:
+            idReview = int(idReview)
             result = db.delete_one({'idReview': idReview})
             if result.deleted_count == 1:
                 return redirect(url_for('reviews'))
@@ -107,8 +109,7 @@ class ReviewCtrl:
         return jsonify(review_list), 200
 
     @staticmethod
-    def getReviewById(db: Collection):
-        idReview = request.args.get('idReview')
+    def getReviewById(db: Collection, idReview):
         if idReview:
             idReview = int(idReview)
             matching_review = db.find({'idReview': idReview})
@@ -133,6 +134,7 @@ class ReviewCtrl:
     def getReviewsByIdContent(db: Collection):
         idContent = request.args.get('idContent')
         if idContent:
+            idContent = int(idContent)
             matching_review = db.find({'idContent': idContent})
             if matching_review:
                 review_list = [
@@ -155,6 +157,7 @@ class ReviewCtrl:
     def getReviewsByIdProfile(db: Collection):
         idProfile = request.args.get('idProfile')
         if idProfile:
+            idProfile = int(idProfile)
             matching_review = db.find({'idProfile': idProfile})
             if matching_review:
                 review_list = [
@@ -273,6 +276,7 @@ class ReviewCtrl:
     def getStatsReview(db: Collection):
         idContent = request.args.get('idContent')
         if idContent:
+            idContent = int(idContent)
             matching_review = db.find({'idContent': idContent})
             if matching_review:
                 review_list = [
