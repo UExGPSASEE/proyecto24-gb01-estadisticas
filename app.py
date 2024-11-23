@@ -1,9 +1,10 @@
+from flask import Flask, render_template
+from flask_cors import CORS
+
 import database as dbase
-from flask import Flask, render_template, request, jsonify, redirect, url_for
-from flask_cors import CORS, cross_origin
 from controllers.language_ctrl import LanguageCtrl
-from controllers.review_ctrl import ReviewCtrl
 from controllers.profile_ctrl import ProfileCtrl
+from controllers.review_ctrl import ReviewCtrl
 from controllers.user_ctrl import UserCtrl
 from controllers.view_ctrl import ViewsCtrl
 
@@ -13,94 +14,137 @@ app = Flask(__name__)
 
 # CORS(app)
 CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})  # CORS restringido al origen React
+
+
 # -------------------------------------------------------------------------------------------------------
+
+
 @app.route('/')
 def home():
     return render_template('index.html')
+
+
 # -------------------------------------------------------------------------------------------------------
+
+
 @app.route('/languages')
 def languages():
-    languages = db['languages']
-    languagesReceived = languages.find()
-    return render_template('DB_Language.html', languages=languagesReceived)
+    return LanguageCtrl.render_template(db['languages'])
+
 
 @app.route('/languages', methods=['POST'])
 def addLanguage():
     return LanguageCtrl.addLanguage(db['languages'])
 
+
 @app.route('/languages', methods=['PUT'])
 def putLanguageForm():
     return LanguageCtrl.putLanguageForm(db['languages'])
 
-@app.route('/languages/<idLanguage>', methods=['PUT'])
-def putLanguage():
-    return LanguageCtrl.putLanguage(db['languages'])
-
-@app.route('/languages/<idLanguage>', methods=['DELETE'])
-def deleteLanguage():
-    return LanguageCtrl.deleteLanguage(db['languages'])
 
 @app.route('/languages', methods=['DELETE'])
 def deleteLanguageForm():
     return LanguageCtrl.deleteLanguageForm(db['languages'])
+
+
+@app.route('/languages/<idLanguage>', methods=['PUT'])
+def putLanguage():
+    return LanguageCtrl.putLanguageParam(db['languages'])
+
+
+@app.route('/languages/<idLanguage>', methods=['DELETE'])
+def deleteLanguage():
+    return LanguageCtrl.deleteLanguageParam(db['languages'])
+
+
+# @app.route('/languages/all')
+# def getAllLanguages():
+#     # TODO
+#     return LanguageCtrl.getAllViews(db['languages'])
+
 # -------------------------------------------------------------------------------------------------------
+
+
 @app.route('/reviews')
 def reviews():
-    reviews = db['reviews']
-    reviewsReceived = reviews.find()
-    return render_template('DB_Review.html', reviews=reviewsReceived)
+    return ReviewCtrl.render_template(db['reviews'])
 
-@app.route('/reviews/reviewAdded', methods=['POST'])
+
+@app.route('/reviews', methods=['POST'])
 def addReview():
     return ReviewCtrl.addReview(db['reviews'])
 
-@app.route('/reviews/reviewUpdated', methods=['POST'])
+
+@app.route('/reviews', methods=['PUT'])
+def putReviewForm():
+    return ReviewCtrl.putReviewForm(db['reviews'])
+
+
+@app.route('/reviews', methods=['DELETE'])
+def deleteReviewForm():
+    return ReviewCtrl.deleteReviewForm(db['reviews'])
+
+
+@app.route('/reviews/<idReview>', methods=['PUT'])
 def putReview():
-    return ReviewCtrl.putReview(db['reviews'])
+    return ReviewCtrl.putReviewParam(db['reviews'])
 
-@app.route('/reviews/reviewDeleted', methods=['POST'])
+
+@app.route('/reviews/<idReview>', methods=['DELETE'])
 def deleteReview():
-    return ReviewCtrl.deleteReview(db['reviews'])
+    return ReviewCtrl.deleteReviewParam(db['reviews'])
 
-@app.route('/reviews/reviewsListed', methods=['GET'])
+
+@app.route('/reviews/all', methods=['GET'])
 def getAllReviews():
     return ReviewCtrl.getAllReviews(db['reviews'])
 
-@app.route('/reviews/reviewFound', methods=['GET'])
+
+@app.route('/reviews/<idReview>', methods=['GET'])
 def getReviewById():
     return ReviewCtrl.getReviewById(db['reviews'])
+
 
 @app.route('/reviews/reviewsByIdContent', methods=['GET'])
 def getReviewsByIdContent():
     return ReviewCtrl.getReviewsByIdContent(db['reviews'])
 
+
 @app.route('/reviews/reviewsByIdProfile', methods=['GET'])
 def getReviewsByIdProfile():
     return ReviewCtrl.getReviewsByIdProfile(db['reviews'])
+
 
 @app.route('/reviews/reviewsByRating', methods=['GET'])
 def getReviewsByRating():
     return ReviewCtrl.getReviewsByRating(db['reviews'])
 
+
 @app.route('/reviews/reviewsByMinRating', methods=['GET'])
 def getReviewsByMinRating():
     return ReviewCtrl.getReviewsByMinRating(db['reviews'])
+
 
 @app.route('/reviews/reviewsByMaxRating', methods=['GET'])
 def getReviewsByMaxRating():
     return ReviewCtrl.getReviewsByMaxRating(db['reviews'])
 
+
 @app.route('/reviews/reviewsWithCommentary', methods=['GET'])
 def getReviewsWithCommentary():
     return ReviewCtrl.getReviewsWithCommentary(db['reviews'])
+
 
 @app.route('/reviews/reviewsWithoutCommentary', methods=['GET'])
 def getReviewsWithoutCommentary():
     return ReviewCtrl.getReviewsWithoutCommentary(db['reviews'])
 
+
 @app.route('/reviews/stats', methods=['GET'])
 def getStatsReview():
     return ReviewCtrl.getStatsReview(db['reviews'])
+
+
 # -------------------------------------------------------------------------------------------------------
 @app.route('/profiles')
 def profiles():
@@ -108,73 +152,99 @@ def profiles():
     profilesReceived = profiles.find()
     return render_template('DB_ProfileUser.html', profiles=profilesReceived)
 
+
 @app.route('/profiles/profileAdded', methods=['POST'])
 def addProfile():
     return ProfileCtrl.addProfile(db['profiles'])
+
 
 @app.route('/profiles/profileUpdated', methods=['POST'])
 def putProfile():
     return ProfileCtrl.putProfile(db['profiles'])
 
+
 @app.route('/profiles/profileDeleted', methods=['POST'])
 def deleteProfile():
     return ProfileCtrl.deleteProfile(db['profiles'])
+
+
 # -------------------------------------------------------------------------------------------------------
 @app.route('/users')
 def users():
-    users = db['users']
-    usersReceived = users.find()
-    return render_template('DB_User.html', users=usersReceived)
+    return UserCtrl.render_template(db['users'])
 
-@app.route('/users/userAdded', methods=['POST'])
+
+@app.route('/users', methods=['POST'])
 def addUser():
     return UserCtrl.addUser(db['users'])
+
 
 @app.route('/users/userUpdated', methods=['POST'])
 def putUser():
     return UserCtrl.putUser(db['users'])
 
+
 @app.route('/users/userDeleted', methods=['POST'])
 def deleteUser():
     return UserCtrl.deleteUser(db['users'])
+
+
 # -------------------------------------------------------------------------------------------------------
 @app.route('/views')
 def views():
-    views = db['views']
-    viewsReceived = views.find()
-    return render_template('DB_Views.html', views=viewsReceived)
+    return ViewsCtrl.render_template(db['views'])
 
-@app.route('/views/viewAdded', methods=['POST'])
+
+@app.route('/views', methods=['POST'])
 def addView():
     return ViewsCtrl.addView(db['views'])
 
-@app.route('/views/viewUpdated', methods=['POST'])
+
+@app.route('/views', methods=['PUT'])
+def putViewForm():
+    return ViewsCtrl.putViewForm(db['views'])
+
+
+@app.route('/views', methods=['DELETE'])
+def deleteViewForm():
+    return ViewsCtrl.deleteViewForm(db['views'])
+
+
+@app.route('/views/<idView>', methods=['PUT'])
 def putView():
-    return ViewsCtrl.putView(db['views'])
+    return ViewsCtrl.putViewParam(db['views'])
 
-@app.route('/views/viewDeleted', methods=['POST'])
+
+@app.route('/views/<idView>', methods=['DELETE'])
 def deleteView():
-    return ViewsCtrl.deleteView(db['views'])
+    return ViewsCtrl.deleteViewParam(db['views'])
 
-@app.route('/views/viewsListed', methods=['GET'])
+
+@app.route('/views/all', methods=['GET'])
 def getAllViews():
     return ViewsCtrl.getAllViews(db['views'])
 
-@app.route('/views/viewFound', methods=['GET'])
+
+@app.route('/views/<idView>', methods=['GET'])
 def getViewById():
     return ViewsCtrl.getViewById(db['views'])
+
 
 @app.route('/views/viewsByIdContent', methods=['GET'])
 def getViewsByIdContent():
     return ViewsCtrl.getViewsByIdContent(db['views'])
 
+
 @app.route('/views/viewsByIdProfile', methods=['GET'])
 def getViewsByIdProfile():
     return ViewsCtrl.getViewsByIdProfile(db['views'])
 
+
 @app.route('/views/stats', methods=['GET'])
 def getStatsView():
     return ViewsCtrl.getStatsView(db['views'])
+
+
 # -------------------------------------------------------------------------------------------------------
 if __name__ == '__main__':
     app.run(debug=True, port=8083)

@@ -1,7 +1,9 @@
 from flask import render_template, request, jsonify, redirect, url_for
 from pymongo.collection import Collection
-from models.profileUser import ProfileUser
+
 from database import get_next_sequence_value as get_next_sequence_value
+from models.profileUser import ProfileUser
+
 
 class ProfileCtrl:
     @staticmethod
@@ -11,7 +13,7 @@ class ProfileCtrl:
 
     @staticmethod
     def addProfile(db: Collection):
-        idProfileUser = get_next_sequence_value(db,"idProfileUser")
+        idProfileUser = get_next_sequence_value(db, "idProfileUser")
         name = request.form['name']
         pin = request.form['pin']
         idUser = request.form['idUser']
@@ -22,7 +24,7 @@ class ProfileCtrl:
             db.insert_one(profileUser.toDBCollection())
             return redirect(url_for('profiles'))
         else:
-            return jsonify({'error': 'Profile User not found or not added', 'status':'404 Not Found'}), 404
+            return jsonify({'error': 'Profile User not found or not added', 'status': '404 Not Found'}), 404
 
     @staticmethod
     def putProfile(db: Collection):
@@ -33,18 +35,17 @@ class ProfileCtrl:
         if idProfile and name and pin and (request.form.get('method') == 'PUT'):
             filter = {'idProfileUser': idProfile}
             if idLanguage:
-                change = {'$set': {'name': name, 'pin': pin, 'idLanguage':idLanguage}}
+                change = {'$set': {'name': name, 'pin': pin, 'idLanguage': idLanguage}}
             else:
                 change = {'$set': {'name': name, 'pin': pin}}
             result = db.update_one(filter, change)
             if result.matched_count == 0:
-                return jsonify({'error': 'Profile not found or not updated', 'status':'404 Not Found'}), 404
+                return jsonify({'error': 'Profile not found or not updated', 'status': '404 Not Found'}), 404
             elif result.modified_count == 0:
                 return jsonify({'message': 'New profile matches with actual profile', 'status': '200 OK'}), 200
             return redirect(url_for('profiles'))
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
-
 
     @staticmethod
     def deleteProfile(db: Collection):

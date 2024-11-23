@@ -7,10 +7,10 @@ class Review:
         self.idContent = idContent
 
     def toDBCollection(self):
-        return{
-            'idReview' : self.idReview,
-            'rating' : self.rating,
-            'commentary' : self.commentary,
-            'idProfileUser' : self.idProfileUser,
-            'idContent' : self.idContent
+        return {
+            'idReview': self.idReview,
+            'rating': self.rating,
+            'commentary': self.commentary,
+            'idProfileUser': self.idProfileUser,
+            'idContent': self.idContent
         }

@@ -6,53 +6,53 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="container">
-        <h1 class="text-center mt-5 mb-5"> MedifliStats - Languages</h1>
-    </div>
-    <div class="container">
-        <div class="row row-col-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2">
-            <div class="col-md-6 mb-3">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="text-center">Insertar Language</h5>
-                    </div>
-                    <div class="card-body">
-                        <form action="/languages/languageAdded" method="POST">
-                            <label>Nombre del Language</label>
-                            <input type="text" class="form-control mb-3" name="name" required>
-                            <br><br>
-                            <button class="btn btn-primary" type="submit"> Añadir </button>
-                        </form>
-                    </div>
-                    <div class="card-header">
-                        <h5 class="text-center">Modificar Language</h5>
-                    </div>
-                    <div class="card-body">
-                        <form action="/languages/languageUpdated" method="POST">
-                            <input type="hidden" name="method" value="PUT">
-                            <label for="idLanguage">¿Qué id tiene el Language que quieres modificar?</label>
-                            <input type="number" id="idLanguage" name="idLanguage" required>
-                            <br><br>
-                            <label for="name">¿por qué nombre deseas cambiarlo?</label>
-                            <input type="text" id="name" name="name" required>
-                            <br><br>
-                            <button class="btn btn-primary" type="submit"> Guardar </button>
-                        </form>
-                    </div>
-                    <div class="card-header">
-                        <h5 class="text-center">Borrar Language</h5>
-                    </div>
-                    <div class="card-body">
-                        <form action="/languages/languageDeleted" method="POST">
-                            <input type="hidden" name="method" value="DELETE">
-                            <label>¿Qué id tiene el Language que deseas borrar?</label>
-                            <input type="number" id="idLanguage" class="form-control mb-3" name="idLanguage" required>
-                            <button class="btn btn-primary" type="submit"> Borrar </button>
-                        </form>
-                    </div>
+<div class="container">
+    <h1 class="text-center mt-5 mb-5"> MedifliStats - Languages</h1>
+</div>
+<div class="container">
+    <div class="row row-col-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2">
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="text-center">Insertar Language</h5>
+                </div>
+                <div class="card-body">
+                    <form action="/languages/languageAdded" method="POST">
+                        <label>Nombre del Language</label>
+                        <input type="text" class="form-control mb-3" name="name" required>
+                        <br><br>
+                        <button class="btn btn-primary" type="submit"> Añadir</button>
+                    </form>
+                </div>
+                <div class="card-header">
+                    <h5 class="text-center">Modificar Language</h5>
+                </div>
+                <div class="card-body">
+                    <form action="/languages/languageUpdated" method="POST">
+                        <input type="hidden" name="method" value="PUT">
+                        <label for="idLanguage">¿Qué id tiene el Language que quieres modificar?</label>
+                        <input type="number" id="idLanguage" name="idLanguage" required>
+                        <br><br>
+                        <label for="name">¿por qué nombre deseas cambiarlo?</label>
+                        <input type="text" id="name" name="name" required>
+                        <br><br>
+                        <button class="btn btn-primary" type="submit"> Guardar</button>
+                    </form>
+                </div>
+                <div class="card-header">
+                    <h5 class="text-center">Borrar Language</h5>
+                </div>
+                <div class="card-body">
+                    <form action="/languages/languageDeleted" method="POST">
+                        <input type="hidden" name="method" value="DELETE">
+                        <label>¿Qué id tiene el Language que deseas borrar?</label>
+                        <input type="number" id="idLanguage" class="form-control mb-3" name="idLanguage" required>
+                        <button class="btn btn-primary" type="submit"> Borrar</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>

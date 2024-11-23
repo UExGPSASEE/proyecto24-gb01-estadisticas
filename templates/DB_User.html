@@ -6,65 +6,65 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="container">
-        <h1 class="text-center mt-5 mb-5"> MedifliStats - Users</h1>
-    </div>
-    <div class="container">
-        <div class="row row-col-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2">
-            <div class="col-md-6 mb-3">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="text-center">Insertar User</h5>
-                    </div>
-                    <div class="card-body">
-                        <form action="/users/userAdded" method="POST">
-                            <label>Nombre del User</label>
-                            <input type="text" class="form-control mb-3" name="username" required>
-                            <br><br>
-                            <label>Email del User</label>
-                            <input type="email" class="form-control mb-3" name="email" required>
-                            <br><br>
-                            <label>Contraseña del User</label>
-                            <input type="password" class="form-control mb-3" name="password" required>
-                            <br><br>
-                            <button class="btn btn-primary" type="submit"> Añadir </button>
-                        </form>
-                    </div>
-                    <div class="card-header">
-                        <h5 class="text-center">Modificar User</h5>
-                    </div>
-                    <div class="card-body">
-                        <form action="/users/userUpdated" method="POST">
-                            <input type="hidden" name="method" value="PUT">
-                            <label for="idUser">¿Qué id tiene el User que quieres modificar?</label>
-                            <input type="number" id="idUser" name="idUser" required>
-                            <br><br>
-                            <label>¿Qué nombre deseas poner?</label>
-                            <input type="text" class="form-control mb-3" name="username" required>
-                            <br><br>
-                            <label>¿Quieres cambiar el email?</label>
-                            <input type="email" class="form-control mb-3" name="email" required>
-                            <br><br>
-                            <label>¿Qué contraseña quieres poner?</label>
-                            <input type="password" class="form-control mb-3" name="password">
-                            <br><br>
-                            <button class="btn btn-primary" type="submit"> Guardar </button>
-                        </form>
-                    </div>
-                    <div class="card-header">
-                        <h5 class="text-center">Borrar User</h5>
-                    </div>
-                    <div class="card-body">
-                        <form action="/users/userDeleted" method="POST">
-                            <input type="hidden" name="method" value="DELETE">
-                            <label>¿Qué id tiene el User que deseas borrar?</label>
-                            <input type="number" id="idUser" class="form-control mb-3" name="idUser">
-                            <button class="btn btn-primary" type="submit"> Borrar </button>
-                        </form>
-                    </div>
+<div class="container">
+    <h1 class="text-center mt-5 mb-5"> MedifliStats - Users</h1>
+</div>
+<div class="container">
+    <div class="row row-col-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2">
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="text-center">Insertar User</h5>
+                </div>
+                <div class="card-body">
+                    <form action="/users/userAdded" method="POST">
+                        <label>Nombre del User</label>
+                        <input type="text" class="form-control mb-3" name="username" required>
+                        <br><br>
+                        <label>Email del User</label>
+                        <input type="email" class="form-control mb-3" name="email" required>
+                        <br><br>
+                        <label>Contraseña del User</label>
+                        <input type="password" class="form-control mb-3" name="password" required>
+                        <br><br>
+                        <button class="btn btn-primary" type="submit"> Añadir</button>
+                    </form>
+                </div>
+                <div class="card-header">
+                    <h5 class="text-center">Modificar User</h5>
+                </div>
+                <div class="card-body">
+                    <form action="/users/userUpdated" method="POST">
+                        <input type="hidden" name="method" value="PUT">
+                        <label for="idUser">¿Qué id tiene el User que quieres modificar?</label>
+                        <input type="number" id="idUser" name="idUser" required>
+                        <br><br>
+                        <label>¿Qué nombre deseas poner?</label>
+                        <input type="text" class="form-control mb-3" name="username" required>
+                        <br><br>
+                        <label>¿Quieres cambiar el email?</label>
+                        <input type="email" class="form-control mb-3" name="email" required>
+                        <br><br>
+                        <label>¿Qué contraseña quieres poner?</label>
+                        <input type="password" class="form-control mb-3" name="password">
+                        <br><br>
+                        <button class="btn btn-primary" type="submit"> Guardar</button>
+                    </form>
+                </div>
+                <div class="card-header">
+                    <h5 class="text-center">Borrar User</h5>
+                </div>
+                <div class="card-body">
+                    <form action="/users/userDeleted" method="POST">
+                        <input type="hidden" name="method" value="DELETE">
+                        <label>¿Qué id tiene el User que deseas borrar?</label>
+                        <input type="number" id="idUser" class="form-control mb-3" name="idUser">
+                        <button class="btn btn-primary" type="submit"> Borrar</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
