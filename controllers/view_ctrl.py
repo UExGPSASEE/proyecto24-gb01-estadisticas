@@ -20,6 +20,8 @@ class ViewsCtrl:
         idProfile = request.form['idProfile']
 
         if idView:
+
+            idView = int(idView)
             if dateFinish:
                 view = View(idView, dateInit, True, dateFinish, idContent, idProfile)
                 db.insert_one(view.toDBCollection())
@@ -34,7 +36,8 @@ class ViewsCtrl:
     @staticmethod
     def putView(db: Collection, idView: int):
         dateFinish = request.form.get('dateFinish')
-        if idView and dateFinish and (request.form.get('method') == 'PUT'):
+        if idView and dateFinish:
+            idView = int(idView)
             filter = {'idView': idView}
             change = {'$set': {'isFinished': True, 'dateFinish': dateFinish}}
             result = db.update_one(filter, change)
@@ -59,6 +62,7 @@ class ViewsCtrl:
     @staticmethod
     def deleteView(db: Collection, idView: int):
         if idView:
+            idView = int(idView)
             result = db.delete_one({'idView': idView})
             if result.deleted_count == 1:
                 return redirect(url_for('views'))
@@ -94,9 +98,9 @@ class ViewsCtrl:
         return jsonify(view_list), 200
 
     @staticmethod
-    def getViewById(db: Collection):
-        idView = int(request.args.get('idView'))
+    def getViewById(db: Collection, idView):
         if idView:
+            idView = int(idView)
             matching_view = db.find({'idView': idView})
             if matching_view:
                 viewFound = [
@@ -120,6 +124,7 @@ class ViewsCtrl:
     def getViewsByIdContent(db: Collection):
         idContent = request.args.get('idContent')
         if idContent:
+            idContent = int(idContent)
             matching_view = db.find({'idContent': idContent})
             if matching_view:
                 view_list = [
@@ -143,6 +148,7 @@ class ViewsCtrl:
     def getViewsByIdProfile(db: Collection):
         idProfile = request.args.get('idProfile')
         if idProfile:
+            idProfile = int(idProfile)
             matching_view = db.find({'idProfile': idProfile})
             if matching_view:
                 view_list = [
@@ -166,6 +172,7 @@ class ViewsCtrl:
     def getStatsView(db: Collection):
         idContent = request.args.get('idContent')
         if idContent:
+            idContent = int(idContent)
             matching_view = db.find({'idContent': idContent})
             if matching_view:
                 view_list = [
