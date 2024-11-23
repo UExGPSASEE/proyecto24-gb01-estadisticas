@@ -16,16 +16,16 @@ class ReviewCtrl:
         idReview = get_next_sequence_value(db, "idReview")
         rating = request.form['rating']
         commentary = request.form['commentary']
-        idProfileUser = request.form['idProfileUser']
+        idProfile = request.form['idProfile']
         idContent = request.form['idContent']
 
         if idReview:
             if commentary:
-                review = Review(idReview, int(rating), commentary, idProfileUser, idContent)
+                review = Review(idReview, int(rating), commentary, idProfile, idContent)
                 db.insert_one(review.toDBCollection())
                 return redirect(url_for('reviews'))
             else:
-                review = Review(idReview, int(rating), None, idProfileUser, idContent)
+                review = Review(idReview, int(rating), None, idProfile, idContent)
                 db.insert_one(review.toDBCollection())
                 return redirect(url_for('reviews'))
         else:
@@ -35,7 +35,7 @@ class ReviewCtrl:
     def putReview(db: Collection, idReview: int):
         rating = request.form['rating']
         commentary = request.form['commentary']
-        idProfileUser = request.form['idProfileUser']
+        idProfile = request.form['idProfile']
         idContent = request.form['idContent']
         if idReview:
             filter = {'idReview': idReview}
@@ -46,8 +46,8 @@ class ReviewCtrl:
                 updateFields['rating'] = rating
             if commentary:
                 updateFields['commentary'] = commentary
-            if idProfileUser:
-                updateFields['idProfileUser'] = idProfileUser
+            if idProfile:
+                updateFields['idProfile'] = idProfile
             if idContent:
                 updateFields['idContent'] = idContent
 
@@ -99,7 +99,7 @@ class ReviewCtrl:
                 'idReview': review.get('idReview'),
                 'rating': review.get('rating'),
                 'commentary': review.get('commentary'),
-                'idProfileUser': review.get('idProfileUser'),
+                'idProfile': review.get('idProfile'),
                 'idContent': review.get('idContent')
             }
             for review in allReviews
@@ -108,8 +108,9 @@ class ReviewCtrl:
 
     @staticmethod
     def getReviewById(db: Collection):
-        idReview = int(request.args.get('idReview'))
+        idReview = request.args.get('idReview')
         if idReview:
+            idReview = int(idReview)
             matching_review = db.find({'idReview': idReview})
             if matching_review:
                 reviewFound = [
@@ -117,7 +118,7 @@ class ReviewCtrl:
                         'idReview': review.get('idReview'),
                         'rating': review.get('rating'),
                         'commentary': review.get('commentary'),
-                        'idProfileUser': review.get('idProfileUser'),
+                        'idProfile': review.get('idProfile'),
                         'idContent': review.get('idContent')
                     }
                     for review in matching_review
@@ -139,7 +140,7 @@ class ReviewCtrl:
                         'idReview': review.get('idReview'),
                         'rating': review.get('rating'),
                         'commentary': review.get('commentary'),
-                        'idProfileUser': review.get('idProfileUser'),
+                        'idProfile': review.get('idProfile'),
                         'idContent': review.get('idContent')
                     }
                     for review in matching_review
@@ -152,16 +153,16 @@ class ReviewCtrl:
 
     @staticmethod
     def getReviewsByIdProfile(db: Collection):
-        idProfile = request.args.get('idProfileUser')
+        idProfile = request.args.get('idProfile')
         if idProfile:
-            matching_review = db.find({'idProfileUser': idProfile})
+            matching_review = db.find({'idProfile': idProfile})
             if matching_review:
                 review_list = [
                     {
                         'idReview': review.get('idReview'),
                         'rating': review.get('rating'),
                         'commentary': review.get('commentary'),
-                        'idProfileUser': review.get('idProfileUser'),
+                        'idProfile': review.get('idProfile'),
                         'idContent': review.get('idContent')
                     }
                     for review in matching_review
@@ -174,7 +175,7 @@ class ReviewCtrl:
 
     @staticmethod
     def getReviewsByRating(db: Collection):
-        rating = int(request.args.get('rating'))
+        rating = int(request.args.get('idRating'))
         if rating:
             matching_review = db.find({'rating': rating})
             if matching_review:
@@ -183,7 +184,7 @@ class ReviewCtrl:
                         'idReview': review.get('idReview'),
                         'rating': review.get('rating'),
                         'commentary': review.get('commentary'),
-                        'idProfileUser': review.get('idProfileUser'),
+                        'idProfile': review.get('idProfile'),
                         'idContent': review.get('idContent')
                     }
                     for review in matching_review
@@ -205,7 +206,7 @@ class ReviewCtrl:
                         'idReview': review.get('idReview'),
                         'rating': review.get('rating'),
                         'commentary': review.get('commentary'),
-                        'idProfileUser': review.get('idProfileUser'),
+                        'idProfile': review.get('idProfile'),
                         'idContent': review.get('idContent')
                     }
                     for review in matching_review
@@ -227,7 +228,7 @@ class ReviewCtrl:
                         'idReview': review.get('idReview'),
                         'rating': review.get('rating'),
                         'commentary': review.get('commentary'),
-                        'idProfileUser': review.get('idProfileUser'),
+                        'idProfile': review.get('idProfile'),
                         'idContent': review.get('idContent')
                     }
                     for review in matching_review
@@ -246,7 +247,7 @@ class ReviewCtrl:
                 'idReview': review.get('idReview'),
                 'rating': review.get('rating'),
                 'commentary': review.get('commentary'),
-                'idProfileUser': review.get('idProfileUser'),
+                'idProfile': review.get('idProfile'),
                 'idContent': review.get('idContent')
             }
             for review in allReviewsCommented
@@ -261,7 +262,7 @@ class ReviewCtrl:
                 'idReview': review.get('idReview'),
                 'rating': review.get('rating'),
                 'commentary': review.get('commentary'),
-                'idProfileUser': review.get('idProfileUser'),
+                'idProfile': review.get('idProfile'),
                 'idContent': review.get('idContent')
             }
             for review in allReviewsNotCommented
@@ -279,7 +280,7 @@ class ReviewCtrl:
                         'idReview': review.get('idReview'),
                         'rating': review.get('rating'),
                         'commentary': review.get('commentary'),
-                        'idProfileUser': review.get('idProfileUser'),
+                        'idProfile': review.get('idProfile'),
                         'idContent': review.get('idContent')
                     }
                     for review in matching_review

@@ -19,7 +19,7 @@
                 <div class="card-body">
                     <form action="/reviews/reviewAdded" method="POST">
                         <label>¿Desde qué perfil estás creando la Review?</label>
-                        <input type="number" class="form-control mb-3" name="idProfileUser" required>
+                        <input type="number" class="form-control mb-3" name="idProfile" required>
                         <br><br>
                         <label>¿De qué contenido quieres hacer la Review?</label>
                         <input type="number" class="form-control mb-3" name="idContent" required>
@@ -94,7 +94,7 @@
                 <div class="card-body">
                     <form action="/reviews/reviewsByIdProfile" method="GET">
                         <label>¿Sobre qué perfil deseas buscar la Review?</label>
-                        <input type="number" class="form-control mb-3" name="idProfileUser" required>
+                        <input type="number" class="form-control mb-3" name="idProfile" required>
                         <button class="btn btn-primary" type="submit"> Buscar</button>
                     </form>
                 </div>

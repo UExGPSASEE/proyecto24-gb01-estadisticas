@@ -13,48 +13,35 @@ class ProfileCtrl:
 
     @staticmethod
     def addProfile(db: Collection):
-        idProfileUser = get_next_sequence_value(db, "idProfileUser")
-        name = request.form['name']
-        pin = request.form['pin']
-        idUser = request.form['idUser']
-        idLanguage = request.form['idLanguage']
+        idProfile = get_next_sequence_value(db, "idProfile")
+        name = request.form.get('name')
+        idUser = request.form.get('idUser')
+        idLanguage = request.form.get('idLanguage')
 
-        if idProfileUser:
-            profileUser = ProfileUser(idProfileUser, str(name), int(pin), int(idUser), int(idLanguage))
+        if idProfile:
+            profileUser = ProfileUser(idProfile, str(name), int(idUser), int(idLanguage))
             db.insert_one(profileUser.toDBCollection())
             return redirect(url_for('profiles'))
         else:
             return jsonify({'error': 'Profile User not found or not added', 'status': '404 Not Found'}), 404
 
     @staticmethod
-    def putProfile(db: Collection):
-        idProfile = int(request.form.get('idProfile'))
-        name = request.form.get('name')
-        pin = request.form.get('pin')
-        idLanguage = request.form.get('idLanguage')
-        if idProfile and name and pin and (request.form.get('method') == 'PUT'):
-            filter = {'idProfileUser': idProfile}
-            if idLanguage:
-                change = {'$set': {'name': name, 'pin': pin, 'idLanguage': idLanguage}}
-            else:
-                change = {'$set': {'name': name, 'pin': pin}}
-            result = db.update_one(filter, change)
-            if result.matched_count == 0:
-                return jsonify({'error': 'Profile not found or not updated', 'status': '404 Not Found'}), 404
-            elif result.modified_count == 0:
-                return jsonify({'message': 'New profile matches with actual profile', 'status': '200 OK'}), 200
-            return redirect(url_for('profiles'))
-        else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
-
-    @staticmethod
-    def deleteProfile(db: Collection):
-        idProfile = int(request.form.get('idProfile'))
-        if request.form.get('method') == 'DELETE' and idProfile:
-            result = db.delete_one({'idProfileUser': idProfile})
+    def deleteProfile(db: Collection, idProfile: int):
+        if idProfile:
+            result = db.delete_one({'idProfile': idProfile})
             if result.deleted_count == 1:
                 return redirect(url_for('profiles'))
             else:
                 return jsonify({'error': 'Profile not found or not deleted', 'status': '404 Not Found'}), 404
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+
+    @staticmethod
+    def deleteProfileParam(db: Collection):
+        idProfile = int(request.args.get('idProfile'))
+        return ProfileCtrl.deleteProfile(db, idProfile)
+
+    @staticmethod
+    def deleteProfileForm(db: Collection):
+        idProfile = int(request.form.get('idProfile'))
+        return ProfileCtrl.deleteProfile(db, idProfile)
