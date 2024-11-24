@@ -8,3 +8,4 @@
 */__pycache__/*
 *.pyc
 /models/__pycache__
+/.run

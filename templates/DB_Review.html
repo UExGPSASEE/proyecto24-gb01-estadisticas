@@ -17,7 +17,7 @@
                     <h5 class="text-center">Insertar Review</h5>
                 </div>
                 <div class="card-body">
-                    <form action="/reviews/reviewAdded" method="POST">
+                    <form action="/reviews" method="POST">
                         <label>¿Desde qué perfil estás creando la Review?</label>
                         <input type="number" class="form-control mb-3" name="idProfile" required>
                         <br><br>
@@ -29,6 +29,13 @@
                         <br><br>
                         <label>¿Quieres añadir un comentario?</label>
                         <input type="text" class="form-control mb-3" name="commentary">
+                        <br><br>
+                        <label for="contentType">Elige el tipo de contenido:</label>
+                        <select name="contentType" id="contentType">
+                            {% for name, value in content_types %}
+                            <option value="{{ value }}">{{ name }}</option>
+                            {% endfor %}
+                        </select>
                         <br><br>
                         <button class="btn btn-primary" type="submit"> Añadir</button>
                     </form>
