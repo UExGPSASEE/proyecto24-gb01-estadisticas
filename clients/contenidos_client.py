@@ -24,7 +24,7 @@ class ContenidosClient:
 
     @staticmethod
     def getSeason(idSeason):
-        url = f"{ContenidosClient.BASE_URL}/series/{idSeason}"
+        url = f"{ContenidosClient.BASE_URL}/seasons/{idSeason}"
         response = requests.get(url)
         return ContenidosClient.handleResponse(response)
 

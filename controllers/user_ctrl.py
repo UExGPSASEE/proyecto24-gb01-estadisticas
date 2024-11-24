@@ -3,6 +3,7 @@ from pymongo.collection import Collection
 
 from database import get_next_sequence_value as get_next_sequence_value
 from models.user import User
+from clients.users_client import UserClient
 
 
 class UserCtrl:
@@ -19,7 +20,10 @@ class UserCtrl:
 
         if idUser:
             idUser = int(idUser)
+            # user = UserClient.getUser(idUser)
+            # user = User(idUser, user.get('username'), user.get('email'))
             user = User(idUser, username, email)
+
             db.insert_one(user.toDBCollection())
             return redirect(url_for('users'))
         else:
