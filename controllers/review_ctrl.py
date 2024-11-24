@@ -1,6 +1,8 @@
 from flask import render_template, request, jsonify, redirect, url_for
 from pymongo.collection import Collection
 
+from clients.contenidos_client import ContenidosClient
+from models.content import ContentType
 from database import get_next_sequence_value as get_next_sequence_value
 from models.review import Review
 
@@ -9,34 +11,35 @@ class ReviewCtrl:
     @staticmethod
     def render_template(db: Collection):
         reviewsReceived = db.find()
-        return render_template('DB_Review.html', reviews=reviewsReceived)
+        content_types = [(ct.name, ct.value) for ct in ContentType]
+        return render_template('DB_Review.html', reviews=reviewsReceived, content_types=content_types)
 
     @staticmethod
     def addReview(db: Collection):
         idReview = get_next_sequence_value(db, "idReview")
-        rating = request.form['rating']
-        commentary = request.form['commentary']
-        idProfile = request.form['idProfile']
-        idContent = request.form['idContent']
+        rating = request.form.get('rating')
+        commentary = request.form.get('commentary')
+        idProfile = request.form.get('idProfile')
+        idContent = request.form.get('idContent')
+        contentType = request.form.get('contentType')
 
-        if idReview:
-            if commentary:
-                review = Review(idReview, int(rating), commentary, idProfile, idContent)
+        if idReview and idContent:
+            if ContenidosClient.checkContentExists(int(idContent), int(contentType)):
+                if not commentary:
+                    commentary = None
+                review = Review(int(idReview), int(rating), commentary, int(idProfile), int(idContent),
+                                int(contentType))
                 db.insert_one(review.toDBCollection())
                 return redirect(url_for('reviews'))
             else:
-                review = Review(idReview, int(rating), None, idProfile, idContent)
-                db.insert_one(review.toDBCollection())
-                return redirect(url_for('reviews'))
+                return jsonify({'error': 'Error when obtaining original content', 'status': '404 Not Found'}), 404
         else:
-            return jsonify({'error': 'Review not found or not added', 'status': '404 Not Found'}), 404
+            return jsonify({'error': 'Error when creating review', 'status': '500 Internal Server Error'}), 500
 
     @staticmethod
     def putReview(db: Collection, idReview: int):
         rating = request.form['rating']
         commentary = request.form['commentary']
-        idProfile = request.form['idProfile']
-        idContent = request.form['idContent']
         if idReview:
             idReview = int(idReview)
             filter = {'idReview': idReview}
@@ -47,11 +50,6 @@ class ReviewCtrl:
                 updateFields['rating'] = rating
             if commentary:
                 updateFields['commentary'] = commentary
-            if idProfile:
-                updateFields['idProfile'] = idProfile
-            if idContent:
-                updateFields['idContent'] = idContent
-
             result = db.update_one(filter, updateFields)
             if result.matched_count == 0:
                 return jsonify({'error': 'Review not found or not updated', 'status': '404 Not Found'}), 404
@@ -96,7 +94,7 @@ class ReviewCtrl:
     @staticmethod
     def getAllReviews(db: Collection):
         allReviews = db.find()
-        review_list = [
+        reviewList = [
             {
                 'idReview': review.get('idReview'),
                 'rating': review.get('rating'),
@@ -106,24 +104,27 @@ class ReviewCtrl:
             }
             for review in allReviews
         ]
-        return jsonify(review_list), 200
+        if reviewList.__len__() > 0:
+            return jsonify(reviewList), 200
+        else:
+            return jsonify({'error': 'Not found', 'status': '404 Bad Request'}), 404
 
     @staticmethod
     def getReviewById(db: Collection, idReview):
         if idReview:
             idReview = int(idReview)
             matching_review = db.find({'idReview': idReview})
-            if matching_review:
-                reviewFound = [
-                    {
-                        'idReview': review.get('idReview'),
-                        'rating': review.get('rating'),
-                        'commentary': review.get('commentary'),
-                        'idProfile': review.get('idProfile'),
-                        'idContent': review.get('idContent')
-                    }
-                    for review in matching_review
-                ]
+            reviewFound = [
+                {
+                    'idReview': review.get('idReview'),
+                    'rating': review.get('rating'),
+                    'commentary': review.get('commentary'),
+                    'idProfile': review.get('idProfile'),
+                    'idContent': review.get('idContent')
+                }
+                for review in matching_review
+            ]
+            if reviewFound.__len__()>0:
                 return jsonify(reviewFound), 200
             else:
                 return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
@@ -136,18 +137,18 @@ class ReviewCtrl:
         if idContent:
             idContent = int(idContent)
             matching_review = db.find({'idContent': idContent})
-            if matching_review:
-                review_list = [
-                    {
-                        'idReview': review.get('idReview'),
-                        'rating': review.get('rating'),
-                        'commentary': review.get('commentary'),
-                        'idProfile': review.get('idProfile'),
-                        'idContent': review.get('idContent')
-                    }
-                    for review in matching_review
-                ]
-                return jsonify(review_list), 200
+            reviewList = [
+                {
+                    'idReview': review.get('idReview'),
+                    'rating': review.get('rating'),
+                    'commentary': review.get('commentary'),
+                    'idProfile': review.get('idProfile'),
+                    'idContent': review.get('idContent')
+                }
+                for review in matching_review
+            ]
+            if reviewFound.__len__() > 0:
+                return jsonify(reviewList), 200
             else:
                 return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
         else:
@@ -159,18 +160,18 @@ class ReviewCtrl:
         if idProfile:
             idProfile = int(idProfile)
             matching_review = db.find({'idProfile': idProfile})
-            if matching_review:
-                review_list = [
-                    {
-                        'idReview': review.get('idReview'),
-                        'rating': review.get('rating'),
-                        'commentary': review.get('commentary'),
-                        'idProfile': review.get('idProfile'),
-                        'idContent': review.get('idContent')
-                    }
-                    for review in matching_review
-                ]
-                return jsonify(review_list), 200
+            reviewList = [
+                {
+                    'idReview': review.get('idReview'),
+                    'rating': review.get('rating'),
+                    'commentary': review.get('commentary'),
+                    'idProfile': review.get('idProfile'),
+                    'idContent': review.get('idContent')
+                }
+                for review in matching_review
+            ]
+            if reviewFound.__len__() > 0:
+                return jsonify(reviewList), 200
             else:
                 return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
         else:
@@ -181,18 +182,18 @@ class ReviewCtrl:
         rating = int(request.args.get('idRating'))
         if rating:
             matching_review = db.find({'rating': rating})
-            if matching_review:
-                review_list = [
-                    {
-                        'idReview': review.get('idReview'),
-                        'rating': review.get('rating'),
-                        'commentary': review.get('commentary'),
-                        'idProfile': review.get('idProfile'),
-                        'idContent': review.get('idContent')
-                    }
-                    for review in matching_review
-                ]
-                return jsonify(review_list), 200
+            reviewList = [
+                {
+                    'idReview': review.get('idReview'),
+                    'rating': review.get('rating'),
+                    'commentary': review.get('commentary'),
+                    'idProfile': review.get('idProfile'),
+                    'idContent': review.get('idContent')
+                }
+                for review in matching_review
+            ]
+            if reviewFound.__len__() > 0:
+                return jsonify(reviewList), 200
             else:
                 return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
         else:
@@ -203,18 +204,18 @@ class ReviewCtrl:
         rating = int(request.args.get('rating'))
         if rating:
             matching_review = db.find({'rating': {'$gte': rating}})
-            if matching_review:
-                review_list = [
-                    {
-                        'idReview': review.get('idReview'),
-                        'rating': review.get('rating'),
-                        'commentary': review.get('commentary'),
-                        'idProfile': review.get('idProfile'),
-                        'idContent': review.get('idContent')
-                    }
-                    for review in matching_review
-                ]
-                return jsonify(review_list), 200
+            reviewList = [
+                {
+                    'idReview': review.get('idReview'),
+                    'rating': review.get('rating'),
+                    'commentary': review.get('commentary'),
+                    'idProfile': review.get('idProfile'),
+                    'idContent': review.get('idContent')
+                }
+                for review in matching_review
+            ]
+            if reviewFound.__len__() > 0:
+                return jsonify(reviewList), 200
             else:
                 return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
         else:
@@ -225,18 +226,18 @@ class ReviewCtrl:
         rating = int(request.args.get('rating'))
         if rating:
             matching_review = db.find({'rating': {'$lte': rating}})
-            if matching_review:
-                review_list = [
-                    {
-                        'idReview': review.get('idReview'),
-                        'rating': review.get('rating'),
-                        'commentary': review.get('commentary'),
-                        'idProfile': review.get('idProfile'),
-                        'idContent': review.get('idContent')
-                    }
-                    for review in matching_review
-                ]
-                return jsonify(review_list), 200
+            reviewList = [
+                {
+                    'idReview': review.get('idReview'),
+                    'rating': review.get('rating'),
+                    'commentary': review.get('commentary'),
+                    'idProfile': review.get('idProfile'),
+                    'idContent': review.get('idContent')
+                }
+                for review in matching_review
+            ]
+            if reviewFound.__len__() > 0:
+                return jsonify(reviewList), 200
             else:
                 return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
         else:
@@ -245,7 +246,7 @@ class ReviewCtrl:
     @staticmethod
     def getReviewsWithCommentary(db: Collection):
         allReviewsCommented = db.find({'commentary': {'$exists': True, '$ne': None}})
-        review_list = [
+        reviewList = [
             {
                 'idReview': review.get('idReview'),
                 'rating': review.get('rating'),
@@ -255,12 +256,12 @@ class ReviewCtrl:
             }
             for review in allReviewsCommented
         ]
-        return jsonify(review_list), 200
+        return jsonify(reviewList), 200
 
     @staticmethod
     def getReviewsWithoutCommentary(db: Collection):
         allReviewsNotCommented = db.find({'commentary': None})
-        review_list = [
+        reviewList = [
             {
                 'idReview': review.get('idReview'),
                 'rating': review.get('rating'),
@@ -270,7 +271,7 @@ class ReviewCtrl:
             }
             for review in allReviewsNotCommented
         ]
-        return jsonify(review_list), 200
+        return jsonify(reviewList), 200
 
     @staticmethod
     def getStatsReview(db: Collection):
@@ -278,18 +279,18 @@ class ReviewCtrl:
         if idContent:
             idContent = int(idContent)
             matching_review = db.find({'idContent': idContent})
-            if matching_review:
-                review_list = [
-                    {
-                        'idReview': review.get('idReview'),
-                        'rating': review.get('rating'),
-                        'commentary': review.get('commentary'),
-                        'idProfile': review.get('idProfile'),
-                        'idContent': review.get('idContent')
-                    }
-                    for review in matching_review
-                ]
-                return jsonify(len(review_list)), 200
+            reviewList = [
+                {
+                    'idReview': review.get('idReview'),
+                    'rating': review.get('rating'),
+                    'commentary': review.get('commentary'),
+                    'idProfile': review.get('idProfile'),
+                    'idContent': review.get('idContent')
+                }
+                for review in matching_review
+            ]
+            if reviewFound.__len__() > 0:
+                return jsonify(reviewList), 200
             else:
                 return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
         else:

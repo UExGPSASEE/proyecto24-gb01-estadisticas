@@ -17,12 +17,19 @@
                     <h5 class="text-center">Insertar Views</h5>
                 </div>
                 <div class="card-body">
-                    <form action="/views/viewAdded" method="POST">
+                    <form action="/views" method="POST">
                         <label>¿Desde qué perfil estás creando la View?</label>
                         <input type="number" class="form-control mb-3" name="idProfile" required>
                         <br><br>
                         <label>¿De qué contenido quieres hacer la View?</label>
                         <input type="number" class="form-control mb-3" name="idContent" required>
+                        <br><br>
+                        <label for="contentType">Elige el tipo de contenido:</label>
+                        <select name="contentType" id="contentType">
+                            {% for name, value in content_types %}
+                            <option value="{{ value }}">{{ name }}</option>
+                            {% endfor %}
+                        </select>
                         <br><br>
                         <label>¿Cuándo has empezado a verlo?</label>
                         <input type="date" class="form-control mb-3" id="dateInit" name="dateInit" required>
@@ -30,6 +37,7 @@
                         <label>¿Cuándo has terminado de verlo?(Opcional)</label>
                         <input type="date" class="form-control mb-3" id="dateFinish" name="dateFinish">
                         <br><br>
+
                         <button class="btn btn-primary" type="submit"> Añadir</button>
                     </form>
                 </div>
