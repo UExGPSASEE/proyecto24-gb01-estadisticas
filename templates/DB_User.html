@@ -18,13 +18,16 @@
                 </div>
                 <div class="card-body">
                     <form action="/users" method="POST">
-                        <label>Nombre del User</label>
+                         <label>ID del User</label>
+                        <input type="number" class="form-control mb-3" name="idUser" required>
+                        <br><br>
+                        <label>Nombre de usuario</label>
                         <input type="text" class="form-control mb-3" name="username" required>
                         <br><br>
-                        <label>Email del User</label>
+                        <label>Email</label>
                         <input type="email" class="form-control mb-3" name="email" required>
                         <br><br>
-                        <label>Contraseña del User</label>
+                        <label>Contraseña</label>
                         <input type="password" class="form-control mb-3" name="password" required>
                         <br><br>
                         <button class="btn btn-primary" type="submit"> Añadir</button>
