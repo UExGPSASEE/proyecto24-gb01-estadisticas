@@ -58,7 +58,7 @@ class ReviewCtrl:
                 return jsonify({'message': 'New review matches with actual review', 'status': '200 OK'}), 200
             return redirect(url_for('reviews'))
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()
 
     @staticmethod
     def putReviewParam(db: Collection):
@@ -80,7 +80,7 @@ class ReviewCtrl:
             else:
                 ErrorCtrl.error_404('Review')
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()
 
     @staticmethod
     def deleteReviewParam(db: Collection):
@@ -130,7 +130,7 @@ class ReviewCtrl:
             else:
                 ErrorCtrl.error_404('Review')
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()
 
     @staticmethod
     def getReviewsByIdContent(db: Collection):
@@ -153,7 +153,7 @@ class ReviewCtrl:
             else:
                 ErrorCtrl.error_404('Review')
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()
 
     @staticmethod
     def getReviewsByIdProfile(db: Collection):
@@ -176,7 +176,7 @@ class ReviewCtrl:
             else:
                 ErrorCtrl.error_404('Review')
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()
 
     @staticmethod
     def getReviewsByRating(db: Collection):
@@ -198,7 +198,7 @@ class ReviewCtrl:
             else:
                 ErrorCtrl.error_404('Review')
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()
 
     @staticmethod
     def getReviewsByMinRating(db: Collection):
@@ -220,7 +220,7 @@ class ReviewCtrl:
             else:
                 ErrorCtrl.error_404('Review')
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()
 
     @staticmethod
     def getReviewsByMaxRating(db: Collection):
@@ -242,7 +242,7 @@ class ReviewCtrl:
             else:
                 ErrorCtrl.error_404('Review')
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()
 
     @staticmethod
     def getReviewsWithCommentary(db: Collection):
@@ -295,4 +295,4 @@ class ReviewCtrl:
             else:
                 ErrorCtrl.error_404('Review')
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()

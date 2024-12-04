@@ -36,7 +36,7 @@ class ProfileCtrl:
             else:
                 ErrorCtrl.error_404('Profile')
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()
 
     @staticmethod
     def deleteProfileParam(db: Collection):
