@@ -19,7 +19,7 @@
                 <div class="card-body">
                     <form action="/users" method="POST">
                          <label>ID del User</label>
-                        <input type="number" class="form-control mb-3" name="idUser" required>
+                        <input type="number" class="form-control mb-3" name="id_user" required>
                         <br><br>
                         <label>Nombre de usuario</label>
                         <input type="text" class="form-control mb-3" name="username" required>
@@ -38,10 +38,10 @@
                     <h5 class="text-center">Borrar User</h5>
                 </div>
                 <div class="card-body">
-                    <form action="/users/userDeleted" method="POST">
+                    <form action="/users/{id_user}" method="POST">
                         <input type="hidden" name="method" value="DELETE">
                         <label>¿Qué id tiene el User que deseas borrar?</label>
-                        <input type="number" id="idUser" class="form-control mb-3" name="idUser">
+                        <input type="number" id="id_user" class="form-control mb-3" name="id_user">
                         <button class="btn btn-primary" type="submit"> Borrar</button>
                     </form>
                 </div>

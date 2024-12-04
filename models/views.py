@@ -1,20 +1,20 @@
 class View:
-    def __init__(self, idView, dateInit, isFinished, dateFinish, idProfile, idContent, typeContent):
-        self.idView = idView
-        self.dateInit = dateInit
-        self.isFinished = isFinished
-        self.dateFinish = dateFinish
-        self.idProfile = idProfile
-        self.idContent = idContent
-        self.typeContent = typeContent
+    def __init__(self, id_view, date_init, is_finished, date_finish, id_profile, id_content, type_content):
+        self.id_view = id_view
+        self.date_init = date_init
+        self.is_finished = is_finished
+        self.date_finish = date_finish
+        self.id_profile = id_profile
+        self.id_content = id_content
+        self.type_content = type_content
 
     def toDBCollection(self):
         return {
-            'idView': self.idView,
-            'dateInit': self.dateInit,
-            'isFinished': self.isFinished,
-            'dateFinish': self.dateFinish,
-            'idProfile': self.idProfile,
-            'idContent': self.idContent,
-            'typeContent': self.typeContent
+            'id_view': self.id_view,
+            'date_init': self.date_init,
+            'is_finished': self.is_finished,
+            'date_finish': self.date_finish,
+            'id_profile': self.id_profile,
+            'id_content': self.id_content,
+            'type_content': self.type_content
         }

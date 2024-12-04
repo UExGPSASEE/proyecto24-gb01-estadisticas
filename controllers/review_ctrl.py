@@ -11,25 +11,25 @@ from controllers.error_ctrl import ErrorCtrl
 class ReviewCtrl:
     @staticmethod
     def render_template(db: Collection):
-        reviewsReceived = db.find()
+        reviews_received = db.find()
         content_types = [(ct.name, ct.value) for ct in ContentType]
-        return render_template('DB_Review.html', reviews=reviewsReceived, content_types=content_types)
+        return render_template('DB_Review.html', reviews=reviews_received, content_types=content_types)
 
     @staticmethod
-    def addReview(db: Collection):
-        idReview = get_next_sequence_value(db, "idReview")
+    def add_review(db: Collection):
+        id_review = get_next_sequence_value(db, "id_review")
         rating = request.form.get('rating')
         commentary = request.form.get('commentary')
-        idProfile = request.form.get('idProfile')
-        idContent = request.form.get('idContent')
-        contentType = request.form.get('contentType')
+        id_profile = request.form.get('id_profile')
+        id_content = request.form.get('id_content')
+        content_type = request.form.get('content_type')
 
-        if idReview and idContent:
-            if ContenidosClient.checkContentExists(int(idContent), int(contentType)):
+        if id_review and id_content:
+            if ContenidosClient.check_content_exists(int(id_content), int(content_type)):
                 if not commentary:
                     commentary = None
-                review = Review(int(idReview), int(rating), commentary, int(idProfile), int(idContent),
-                                int(contentType))
+                review = Review(int(id_review), int(rating), commentary, int(id_profile), int(id_content),
+                                int(content_type))
                 db.insert_one(review.toDBCollection())
                 return redirect(url_for('reviews'))
             else:
@@ -38,20 +38,20 @@ class ReviewCtrl:
             return jsonify({'error': 'Error when creating review', 'status': '500 Internal Server Error'}), 500
 
     @staticmethod
-    def putReview(db: Collection, idReview: int):
+    def put_review(db: Collection, id_review: int):
         rating = request.form['rating']
         commentary = request.form['commentary']
-        if idReview:
-            idReview = int(idReview)
-            filter = {'idReview': idReview}
+        if id_review:
+            id_review = int(id_review)
+            filter = {'id_review': id_review}
 
-            updateFields = {}
+            update_fields = {}
 
             if rating:
-                updateFields['rating'] = rating
+                update_fields['rating'] = rating
             if commentary:
-                updateFields['commentary'] = commentary
-            result = db.update_one(filter, updateFields)
+                update_fields['commentary'] = commentary
+            result = db.update_one(filter, update_fields)
             if result.matched_count == 0:
                 ErrorCtrl.error_404('Review')
             elif result.modified_count == 0:
@@ -61,20 +61,20 @@ class ReviewCtrl:
             ErrorCtrl.error_400()
 
     @staticmethod
-    def putReviewParam(db: Collection):
-        idReview = int(request.args.get('idReview'))
-        return ReviewCtrl.putReview(db, idReview)
+    def put_review_param(db: Collection):
+        id_review = int(request.args.get('id_review'))
+        return ReviewCtrl.put_review(db, id_review)
 
     @staticmethod
-    def putReviewForm(db: Collection):
-        idReview = int(request.form.get('idReview'))
-        return ReviewCtrl.putReview(db, idReview)
+    def put_review_form(db: Collection):
+        id_review = int(request.form.get('id_review'))
+        return ReviewCtrl.put_review(db, id_review)
 
     @staticmethod
-    def deleteReview(db: Collection, idReview: int):
-        if idReview:
-            idReview = int(idReview)
-            result = db.delete_one({'idReview': idReview})
+    def delete_review(db: Collection, id_review: int):
+        if id_review:
+            id_review = int(id_review)
+            result = db.delete_one({'id_review': id_review})
             if result.deleted_count == 1:
                 return redirect(url_for('reviews'))
             else:
@@ -83,215 +83,215 @@ class ReviewCtrl:
             ErrorCtrl.error_400()
 
     @staticmethod
-    def deleteReviewParam(db: Collection):
-        idReview = int(request.args.get('idReview'))
-        return ReviewCtrl.deleteReview(db, idReview)
+    def delete_review_param(db: Collection):
+        id_review = int(request.args.get('id_review'))
+        return ReviewCtrl.delete_review(db, id_review)
 
     @staticmethod
-    def deleteReviewForm(db: Collection):
-        idReview = int(request.form.get('idReview'))
-        return ReviewCtrl.deleteReview(db, idReview)
+    def delete_review_form(db: Collection):
+        id_review = int(request.form.get('id_review'))
+        return ReviewCtrl.delete_review(db, id_review)
 
     @staticmethod
-    def getAllReviews(db: Collection):
-        allReviews = db.find()
-        reviewList = [
+    def get_all_reviews(db: Collection):
+        all_reviews = db.find()
+        review_list = [
             {
-                'idReview': review.get('idReview'),
+                'id_review': review.get('id_review'),
                 'rating': review.get('rating'),
                 'commentary': review.get('commentary'),
-                'idProfile': review.get('idProfile'),
-                'idContent': review.get('idContent')
+                'id_profile': review.get('id_profile'),
+                'id_content': review.get('id_content')
             }
-            for review in allReviews
+            for review in all_reviews
         ]
-        if reviewList.__len__() > 0:
-            return jsonify(reviewList), 200
+        if review_list.__len__() > 0:
+            return jsonify(review_list), 200
         else:
             ErrorCtrl.error_404('Review')
 
     @staticmethod
-    def getReviewById(db: Collection, idReview):
-        if idReview:
-            idReview = int(idReview)
-            matching_review = db.find({'idReview': idReview})
-            reviewFound = [
+    def get_review_by_id(db: Collection, id_review):
+        if id_review:
+            id_review = int(id_review)
+            matching_review = db.find({'id_review': id_review})
+            review_found = [
                 {
-                    'idReview': review.get('idReview'),
+                    'id_review': review.get('id_review'),
                     'rating': review.get('rating'),
                     'commentary': review.get('commentary'),
-                    'idProfile': review.get('idProfile'),
-                    'idContent': review.get('idContent')
+                    'id_profile': review.get('id_profile'),
+                    'id_content': review.get('id_content')
                 }
                 for review in matching_review
             ]
-            if reviewFound.__len__()>0:
-                return jsonify(reviewFound), 200
+            if review_found.__len__()>0:
+                return jsonify(review_found), 200
             else:
                 ErrorCtrl.error_404('Review')
         else:
             ErrorCtrl.error_400()
 
     @staticmethod
-    def getReviewsByIdContent(db: Collection):
-        idContent = request.args.get('idContent')
-        if idContent:
-            idContent = int(idContent)
-            matching_review = db.find({'idContent': idContent})
-            reviewList = [
+    def get_reviews_by_id_content(db: Collection):
+        id_content = request.args.get('id_content')
+        if id_content:
+            id_content = int(id_content)
+            matching_review = db.find({'id_content': id_content})
+            review_list = [
                 {
-                    'idReview': review.get('idReview'),
+                    'id_review': review.get('id_review'),
                     'rating': review.get('rating'),
                     'commentary': review.get('commentary'),
-                    'idProfile': review.get('idProfile'),
-                    'idContent': review.get('idContent')
+                    'id_profile': review.get('id_profile'),
+                    'id_content': review.get('id_content')
                 }
                 for review in matching_review
             ]
-            if reviewList.__len__() > 0:
-                return jsonify(reviewList), 200
+            if review_list.__len__() > 0:
+                return jsonify(review_list), 200
             else:
                 ErrorCtrl.error_404('Review')
         else:
             ErrorCtrl.error_400()
 
     @staticmethod
-    def getReviewsByIdProfile(db: Collection):
-        idProfile = request.args.get('idProfile')
-        if idProfile:
-            idProfile = int(idProfile)
-            matching_review = db.find({'idProfile': idProfile})
-            reviewList = [
+    def get_reviews_by_id_profile(db: Collection):
+        id_profile = request.args.get('id_profile')
+        if id_profile:
+            id_profile = int(id_profile)
+            matching_review = db.find({'id_profile': id_profile})
+            review_list = [
                 {
-                    'idReview': review.get('idReview'),
+                    'id_review': review.get('id_review'),
                     'rating': review.get('rating'),
                     'commentary': review.get('commentary'),
-                    'idProfile': review.get('idProfile'),
-                    'idContent': review.get('idContent')
+                    'id_profile': review.get('id_profile'),
+                    'id_content': review.get('id_content')
                 }
                 for review in matching_review
             ]
-            if reviewList.__len__() > 0:
-                return jsonify(reviewList), 200
+            if review_list.__len__() > 0:
+                return jsonify(review_list), 200
             else:
                 ErrorCtrl.error_404('Review')
         else:
             ErrorCtrl.error_400()
 
     @staticmethod
-    def getReviewsByRating(db: Collection):
-        rating = int(request.args.get('idRating'))
+    def get_reviews_by_rating(db: Collection):
+        rating = int(request.args.get('id_rating'))
         if rating:
             matching_review = db.find({'rating': rating})
-            reviewList = [
+            review_list = [
                 {
-                    'idReview': review.get('idReview'),
+                    'id_review': review.get('id_review'),
                     'rating': review.get('rating'),
                     'commentary': review.get('commentary'),
-                    'idProfile': review.get('idProfile'),
-                    'idContent': review.get('idContent')
+                    'id_profile': review.get('id_profile'),
+                    'id_content': review.get('id_content')
                 }
                 for review in matching_review
             ]
-            if reviewList.__len__() > 0:
-                return jsonify(reviewList), 200
+            if review_list.__len__() > 0:
+                return jsonify(review_list), 200
             else:
                 ErrorCtrl.error_404('Review')
         else:
             ErrorCtrl.error_400()
 
     @staticmethod
-    def getReviewsByMinRating(db: Collection):
+    def get_reviews_by_min_rating(db: Collection):
         rating = int(request.args.get('rating'))
         if rating:
             matching_review = db.find({'rating': {'$gte': rating}})
-            reviewList = [
+            review_list = [
                 {
-                    'idReview': review.get('idReview'),
+                    'id_review': review.get('id_review'),
                     'rating': review.get('rating'),
                     'commentary': review.get('commentary'),
-                    'idProfile': review.get('idProfile'),
-                    'idContent': review.get('idContent')
+                    'id_profile': review.get('id_profile'),
+                    'id_content': review.get('id_content')
                 }
                 for review in matching_review
             ]
-            if reviewList.__len__() > 0:
-                return jsonify(reviewList), 200
+            if review_list.__len__() > 0:
+                return jsonify(review_list), 200
             else:
                 ErrorCtrl.error_404('Review')
         else:
             ErrorCtrl.error_400()
 
     @staticmethod
-    def getReviewsByMaxRating(db: Collection):
+    def get_reviews_by_max_rating(db: Collection):
         rating = int(request.args.get('rating'))
         if rating:
             matching_review = db.find({'rating': {'$lte': rating}})
-            reviewList = [
+            review_list = [
                 {
-                    'idReview': review.get('idReview'),
+                    'id_review': review.get('id_review'),
                     'rating': review.get('rating'),
                     'commentary': review.get('commentary'),
-                    'idProfile': review.get('idProfile'),
-                    'idContent': review.get('idContent')
+                    'id_profile': review.get('id_profile'),
+                    'id_content': review.get('id_content')
                 }
                 for review in matching_review
             ]
-            if reviewList.__len__() > 0:
-                return jsonify(reviewList), 200
+            if review_list.__len__() > 0:
+                return jsonify(review_list), 200
             else:
                 ErrorCtrl.error_404('Review')
         else:
             ErrorCtrl.error_400()
 
     @staticmethod
-    def getReviewsWithCommentary(db: Collection):
-        allReviewsCommented = db.find({'commentary': {'$exists': True, '$ne': None}})
-        reviewList = [
+    def get_reviews_with_commentary(db: Collection):
+        all_reviews_commented = db.find({'commentary': {'$exists': True, '$ne': None}})
+        review_list = [
             {
-                'idReview': review.get('idReview'),
+                'id_review': review.get('id_review'),
                 'rating': review.get('rating'),
                 'commentary': review.get('commentary'),
-                'idProfile': review.get('idProfile'),
-                'idContent': review.get('idContent')
+                'id_profile': review.get('id_profile'),
+                'id_content': review.get('id_content')
             }
-            for review in allReviewsCommented
+            for review in all_reviews_commented
         ]
-        return jsonify(reviewList), 200
+        return jsonify(review_list), 200
 
     @staticmethod
-    def getReviewsWithoutCommentary(db: Collection):
-        allReviewsNotCommented = db.find({'commentary': None})
-        reviewList = [
+    def get_reviews_without_commentary(db: Collection):
+        all_reviews_not_commented = db.find({'commentary': None})
+        review_list = [
             {
-                'idReview': review.get('idReview'),
+                'id_review': review.get('id_review'),
                 'rating': review.get('rating'),
                 'commentary': review.get('commentary'),
-                'idProfile': review.get('idProfile'),
-                'idContent': review.get('idContent')
+                'id_profile': review.get('id_profile'),
+                'id_content': review.get('id_content')
             }
-            for review in allReviewsNotCommented
+            for review in all_reviews_not_commented
         ]
-        return jsonify(reviewList), 200
+        return jsonify(review_list), 200
 
     @staticmethod
-    def getStatsReview(db: Collection):
-        idContent = request.args.get('idContent')
-        if idContent:
-            idContent = int(idContent)
-            matching_review = db.find({'idContent': idContent})
-            reviewList = [
+    def get_stats_review(db: Collection):
+        id_content = request.args.get('id_content')
+        if id_content:
+            id_content = int(id_content)
+            matching_review = db.find({'id_content': id_content})
+            review_list = [
                 {
-                    'idReview': review.get('idReview'),
+                    'id_review': review.get('id_review'),
                     'rating': review.get('rating'),
                     'commentary': review.get('commentary'),
-                    'idProfile': review.get('idProfile'),
-                    'idContent': review.get('idContent')
+                    'id_profile': review.get('id_profile'),
+                    'id_content': review.get('id_content')
                 }
                 for review in matching_review
             ]
-            if reviewList.__len__() > 0:
-                return jsonify(reviewList), 200
+            if review_list.__len__() > 0:
+                return jsonify(review_list), 200
             else:
                 ErrorCtrl.error_404('Review')
         else:
