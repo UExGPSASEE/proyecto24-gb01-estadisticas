@@ -5,6 +5,7 @@ from clients.contenidos_client import ContenidosClient
 from models.content import ContentType
 from database import get_next_sequence_value as get_next_sequence_value
 from models.review import Review
+from controllers.error_ctrl import ErrorCtrl
 
 
 class ReviewCtrl:
@@ -32,7 +33,7 @@ class ReviewCtrl:
                 db.insert_one(review.toDBCollection())
                 return redirect(url_for('reviews'))
             else:
-                return jsonify({'error': 'Error when obtaining original content', 'status': '404 Not Found'}), 404
+                ErrorCtrl.error_404('Review')
         else:
             return jsonify({'error': 'Error when creating review', 'status': '500 Internal Server Error'}), 500
 
@@ -52,7 +53,7 @@ class ReviewCtrl:
                 updateFields['commentary'] = commentary
             result = db.update_one(filter, updateFields)
             if result.matched_count == 0:
-                return jsonify({'error': 'Review not found or not updated', 'status': '404 Not Found'}), 404
+                ErrorCtrl.error_404('Review')
             elif result.modified_count == 0:
                 return jsonify({'message': 'New review matches with actual review', 'status': '200 OK'}), 200
             return redirect(url_for('reviews'))
@@ -77,7 +78,7 @@ class ReviewCtrl:
             if result.deleted_count == 1:
                 return redirect(url_for('reviews'))
             else:
-                return jsonify({'error': 'Review not found or not deleted', 'status': '404 Not Found'}), 404
+                ErrorCtrl.error_404('Review')
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
 
@@ -107,7 +108,7 @@ class ReviewCtrl:
         if reviewList.__len__() > 0:
             return jsonify(reviewList), 200
         else:
-            return jsonify({'error': 'Not found', 'status': '404 Bad Request'}), 404
+            ErrorCtrl.error_404('Review')
 
     @staticmethod
     def getReviewById(db: Collection, idReview):
@@ -127,7 +128,7 @@ class ReviewCtrl:
             if reviewFound.__len__()>0:
                 return jsonify(reviewFound), 200
             else:
-                return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
+                ErrorCtrl.error_404('Review')
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
 
@@ -147,10 +148,10 @@ class ReviewCtrl:
                 }
                 for review in matching_review
             ]
-            if reviewFound.__len__() > 0:
+            if reviewList.__len__() > 0:
                 return jsonify(reviewList), 200
             else:
-                return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
+                ErrorCtrl.error_404('Review')
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
 
@@ -170,10 +171,10 @@ class ReviewCtrl:
                 }
                 for review in matching_review
             ]
-            if reviewFound.__len__() > 0:
+            if reviewList.__len__() > 0:
                 return jsonify(reviewList), 200
             else:
-                return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
+                ErrorCtrl.error_404('Review')
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
 
@@ -192,10 +193,10 @@ class ReviewCtrl:
                 }
                 for review in matching_review
             ]
-            if reviewFound.__len__() > 0:
+            if reviewList.__len__() > 0:
                 return jsonify(reviewList), 200
             else:
-                return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
+                ErrorCtrl.error_404('Review')
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
 
@@ -214,10 +215,10 @@ class ReviewCtrl:
                 }
                 for review in matching_review
             ]
-            if reviewFound.__len__() > 0:
+            if reviewList.__len__() > 0:
                 return jsonify(reviewList), 200
             else:
-                return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
+                ErrorCtrl.error_404('Review')
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
 
@@ -236,10 +237,10 @@ class ReviewCtrl:
                 }
                 for review in matching_review
             ]
-            if reviewFound.__len__() > 0:
+            if reviewList.__len__() > 0:
                 return jsonify(reviewList), 200
             else:
-                return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
+                ErrorCtrl.error_404('Review')
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
 
@@ -289,9 +290,9 @@ class ReviewCtrl:
                 }
                 for review in matching_review
             ]
-            if reviewFound.__len__() > 0:
+            if reviewList.__len__() > 0:
                 return jsonify(reviewList), 200
             else:
-                return jsonify({'error': 'Review not found', 'status': '404 Not Found'}), 404
+                ErrorCtrl.error_404('Review')
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
