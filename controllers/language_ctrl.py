@@ -3,7 +3,7 @@ from pymongo.collection import Collection
 
 from database import get_next_sequence_value as get_next_sequence_value
 from models.language import Language
-from controllers.error_ctrl import ErrorCtrl
+
 
 class LanguageCtrl:
     @staticmethod
@@ -20,7 +20,7 @@ class LanguageCtrl:
             db.insert_one(language.toDBCollection())
             return redirect(url_for('languages'))
         else:
-            ErrorCtrl.error_404('Language')
+            return jsonify({'error': 'Language not found or not added', 'status': '404 Not Found'}), 404
 
     @staticmethod
     def putLanguage(db: Collection, idLanguage: int):
@@ -31,7 +31,7 @@ class LanguageCtrl:
             change = {'$set': {'name': name}}
             result = db.update_one(filter, change)
             if result.matched_count == 0:
-                return ErrorCtrl.error_404('Language')
+                return jsonify({'error': 'Language not found or not updated', 'status': '404 Not Found'}), 404
             elif result.modified_count == 0:
                 return jsonify({'message': 'New language matches with actual language', 'status': '200 OK'}), 200
             return redirect(url_for('languages'))
@@ -56,7 +56,7 @@ class LanguageCtrl:
             if result.deleted_count == 1:
                 return redirect(url_for('languages'))
             else:
-                ErrorCtrl.error_404('Language')
+                return jsonify({'error': 'Language not found or not deleted', 'status': '404 Not Found'}), 404
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
 
@@ -96,7 +96,7 @@ class LanguageCtrl:
                 ]
                 return jsonify(languageFound), 200
             else:
-                ErrorCtrl.error_404('Language')
+                return jsonify({'error': 'Language not found', 'status': '404 Not Found'}), 404
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
 
@@ -115,6 +115,6 @@ class LanguageCtrl:
                 ]
                 return jsonify(languageFound), 200
             else:
-                ErrorCtrl.error_404('Language')
+                return jsonify({'error': 'Language not found', 'status': '404 Not Found'}), 404
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
