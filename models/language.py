@@ -1,10 +1,10 @@
 class Language:
-    def __init__(self, idLanguage, name):
-        self.idLanguage = idLanguage
+    def __init__(self, id_language, name):
+        self.id_language = id_language
         self.name = name
 
     def toDBCollection(self):
         return {
-            'idLanguage': self.idLanguage,
+            'id_language': self.id_language,
             'name': self.name
         }

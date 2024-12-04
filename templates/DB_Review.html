@@ -19,10 +19,10 @@
                 <div class="card-body">
                     <form action="/reviews" method="POST">
                         <label>¿Desde qué perfil estás creando la Review?</label>
-                        <input type="number" class="form-control mb-3" name="idProfile" required>
+                        <input type="number" class="form-control mb-3" name="id_profile" required>
                         <br><br>
                         <label>¿De qué contenido quieres hacer la Review?</label>
-                        <input type="number" class="form-control mb-3" name="idContent" required>
+                        <input type="number" class="form-control mb-3" name="id_content" required>
                         <br><br>
                         <label>¿Qué valoración le pones?</label>
                         <input type="number" class="form-control mb-3" name="rating" min="1" max="10" required>
@@ -30,8 +30,8 @@
                         <label>¿Quieres añadir un comentario?</label>
                         <input type="text" class="form-control mb-3" name="commentary">
                         <br><br>
-                        <label for="contentType">Elige el tipo de contenido:</label>
-                        <select name="contentType" id="contentType">
+                        <label for="content_type">Elige el tipo de contenido:</label>
+                        <select name="content_type" id="content_type">
                             {% for name, value in content_types %}
                             <option value="{{ value }}">{{ name }}</option>
                             {% endfor %}
@@ -44,10 +44,10 @@
                     <h5 class="text-center">Modificar Review</h5>
                 </div>
                 <div class="card-body">
-                    <form action="/reviews/reviewUpdated" method="POST">
+                    <form action="/reviews/{id_review}" method="POST">
                         <input type="hidden" name="method" value="PUT">
-                        <label for="idReview">¿Qué id tiene la Review que quieres modificar?</label>
-                        <input type="number" id="idReview" name="idReview" required>
+                        <label for="id_review">¿Qué id tiene la Review que quieres modificar?</label>
+                        <input type="number" id="id_review" name="id_review" required>
                         <br><br>
                         <label>¿Quieres cambiar la valoración?</label>
                         <input type="number" class="form-control mb-3" name="rating" min="1" max="10" required>
@@ -62,10 +62,10 @@
                     <h5 class="text-center">Borrar Review</h5>
                 </div>
                 <div class="card-body">
-                    <form action="/reviews/reviewDeleted" method="POST">
+                    <form action="/reviews/{id_review}" method="POST">
                         <input type="hidden" name="method" value="DELETE">
                         <label>¿Qué id tiene la Review que deseas borrar?</label>
-                        <input type="number" id="idReview" class="form-control mb-3" name="idReview">
+                        <input type="number" id="id_review" class="form-control mb-3" name="id_review">
                         <button class="btn btn-primary" type="submit"> Borrar</button>
                     </form>
                 </div>
@@ -73,7 +73,7 @@
                     <h3 class="text-center">Obtener Todas las Reviews</h3>
                 </div>
                 <div class="card-body">
-                    <form action="/reviews/reviewsListed" method="GET">
+                    <form action="/reviews/all" method="GET">
                         <label>Listar todas las valoraciones</label>
                         <button class="btn btn-primary" type="submit"> Buscar</button>
                     </form>
@@ -82,9 +82,9 @@
                     <h3 class="text-center">Obtener Review por Id</h3>
                 </div>
                 <div class="card-body">
-                    <form action="/reviews/reviewFound" method="GET">
+                    <form action="/reviews/{id_review}" method="GET">
                         <label>¿Qué Review deseas buscar?</label>
-                        <input type="number" class="form-control mb-3" name="idReview" required>
+                        <input type="number" class="form-control mb-3" name="id_review" required>
                         <button class="btn btn-primary" type="submit"> Buscar</button>
                     </form>
                 </div>
@@ -92,48 +92,48 @@
                     <h3 class="text-center">Resto de búsquedas de reviews</h3>
                 </div>
                 <div class="card-body">
-                    <form action="/reviews/reviewsByIdContent" method="GET">
+                    <form action="/reviews/contents" method="GET">
                         <label>¿Sobre qué contenido deseas buscar la Review?</label>
-                        <input type="number" class="form-control mb-3" name="idContent" required>
+                        <input type="number" class="form-control mb-3" name="id_content" required>
                         <button class="btn btn-primary" type="submit"> Buscar</button>
                     </form>
                 </div>
                 <div class="card-body">
-                    <form action="/reviews/reviewsByIdProfile" method="GET">
+                    <form action="/reviews/profiles" method="GET">
                         <label>¿Sobre qué perfil deseas buscar la Review?</label>
-                        <input type="number" class="form-control mb-3" name="idProfile" required>
+                        <input type="number" class="form-control mb-3" name="id_profile" required>
                         <button class="btn btn-primary" type="submit"> Buscar</button>
                     </form>
                 </div>
                 <div class="card-body">
-                    <form action="/reviews/reviewsByRating" method="GET">
+                    <form action="/reviews/ratings" method="GET">
                         <label>¿Sobre qué valoración deseas buscar la Review?</label>
                         <input type="number" class="form-control mb-3" name="rating" max="10" required>
                         <button class="btn btn-primary" type="submit"> Buscar</button>
                     </form>
                 </div>
                 <div class="card-body">
-                    <form action="/reviews/reviewsByMinRating" method="GET">
+                    <form action="/reviews/minrating" method="GET">
                         <label>¿Sobre qué valoración mínima deseas buscar la Review?</label>
                         <input type="number" class="form-control mb-3" name="rating" max="10" required>
                         <button class="btn btn-primary" type="submit"> Buscar</button>
                     </form>
                 </div>
                 <div class="card-body">
-                    <form action="/reviews/reviewsByMaxRating" method="GET">
+                    <form action="/reviews/maxrating" method="GET">
                         <label>¿Sobre qué valoración máxima deseas buscar la Review?</label>
                         <input type="number" class="form-control mb-3" name="rating" max="10" required>
                         <button class="btn btn-primary" type="submit"> Buscar</button>
                     </form>
                 </div>
                 <div class="card-body">
-                    <form action="/reviews/reviewsWithCommentary" method="GET">
+                    <form action="/reviews/comments" method="GET">
                         <label>Listar todas las valoraciones con comentarios</label>
                         <button class="btn btn-primary" type="submit"> Buscar</button>
                     </form>
                 </div>
                 <div class="card-body">
-                    <form action="/reviews/reviewsWithoutCommentary" method="GET">
+                    <form action="/reviews/nocomments" method="GET">
                         <label>Listar todas las valoraciones sin comentarios</label>
                         <button class="btn btn-primary" type="submit"> Buscar</button>
                     </form>
@@ -144,7 +144,7 @@
                 <div class="card-body">
                     <form action="/reviews/stats" method="GET">
                         <label>¿Sobre qué contenido deseas buscar la Review?</label>
-                        <input type="number" class="form-control mb-3" name="idContent" required>
+                        <input type="number" class="form-control mb-3" name="id_content" required>
                         <button class="btn btn-primary" type="submit"> Buscar</button>
                     </form>
                 </div>

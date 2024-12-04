@@ -25,26 +25,23 @@
                         <input type="number" class="form-control mb-3" name="pin" required>
                         <br><br>
                         <label>¿A qué usuario se asocia este perfil?</label>
-                        <input type="number" class="form-control mb-3" name="idUser" required>
+                        <input type="number" class="form-control mb-3" name="id_user" required>
                         <br><br>
                         <label>¿Qué idioma quieres usar?</label>
-                        <input type="number" class="form-control mb-3" name="idLanguage" required>
+                        <input type="number" class="form-control mb-3" name="id_language" required>
                         <br><br>
                         <button class="btn btn-primary" type="submit"> Añadir</button>
                     </form>
-                </div>
-                <div class="card-header">
-                    <h5 class="text-center">Modificar ProfileUser</h5>
                 </div>
 
                 <div class="card-header">
                     <h5 class="text-center">Borrar ProfileUser</h5>
                 </div>
                 <div class="card-body">
-                    <form action="/profiles/profileDeleted" method="POST">
+                    <form action="/profiles/{id_profile}" method="POST">
                         <input type="hidden" name="method" value="DELETE">
                         <label>¿Qué id tiene el Profile que deseas borrar?</label>
-                        <input type="number" id="idProfile" class="form-control mb-3" name="idProfile">
+                        <input type="number" id="id_profile" class="form-control mb-3" name="id_profile">
                         <button class="btn btn-primary" type="submit"> Borrar</button>
                     </form>
                 </div>
