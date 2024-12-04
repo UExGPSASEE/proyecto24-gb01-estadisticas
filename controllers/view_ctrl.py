@@ -5,6 +5,7 @@ from database import get_next_sequence_value as get_next_sequence_value
 from models.views import View
 from clients.contenidos_client import ContenidosClient
 from models.content import ContentType
+from controllers.error_ctrl import ErrorCtrl
 
 class ViewsCtrl:
     @staticmethod
@@ -35,7 +36,7 @@ class ViewsCtrl:
                 return redirect(url_for('views'))
 
             else:
-                return jsonify({'error': 'Error when obtaining original content', 'status': '404 Not Found'}), 404
+                ErrorCtrl.error_404('View')
         else:
             return jsonify({'error': 'Error when creating view', 'status': '500 Internal Server Error'}), 500
 
@@ -48,7 +49,7 @@ class ViewsCtrl:
             change = {'$set': {'isFinished': True, 'dateFinish': dateFinish}}
             result = db.update_one(filter, change)
             if result.matched_count == 0:
-                return jsonify({'error': 'View not found or not updated', 'status': '404 Not Found'}), 404
+                ErrorCtrl.error_404('View')
             elif result.modified_count == 0:
                 return jsonify({'message': 'New view matches with actual view', 'status': '200 OK'}), 200
             return redirect(url_for('views'))
@@ -73,7 +74,7 @@ class ViewsCtrl:
             if result.deleted_count == 1:
                 return redirect(url_for('views'))
             else:
-                return jsonify({'error': 'View not found or not deleted', 'status': '404 Not Found'}), 404
+                ErrorCtrl.error_404('View')
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
 
@@ -104,7 +105,7 @@ class ViewsCtrl:
         if viewlist.__len__()>0:
             return jsonify(viewlist), 200
         else:
-            return jsonify({'error': 'View not found', 'status': '404 Not Found'}), 404
+            ErrorCtrl.error_404('View')
 
     @staticmethod
     def getViewById(db: Collection, idView):
@@ -112,7 +113,7 @@ class ViewsCtrl:
             idView = int(idView)
             matching_view = db.find({'idView': idView})
             if matching_view:
-                viewFound = [
+                viewList = [
                     {
                         'idView': view.get('idView'),
                         'dateInit': view.get('dateInit'),
@@ -124,10 +125,10 @@ class ViewsCtrl:
                     for view in matching_view
                 ]
 
-                if viewFound.__len__() > 0:
-                    return jsonify(viewlist), 200
+                if viewList.__len__() > 0:
+                    return jsonify(viewList), 200
                 else:
-                    return jsonify({'error': 'View not found', 'status': '404 Not Found'}), 404
+                    ErrorCtrl.error_404('View')
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
 
@@ -137,7 +138,7 @@ class ViewsCtrl:
         if idContent:
             idContent = int(idContent)
             matching_view = db.find({'idContent': idContent})
-            viewlist = [
+            viewList = [
                 {
                     'idView': view.get('idView'),
                     'dateInit': view.get('dateInit'),
@@ -149,10 +150,10 @@ class ViewsCtrl:
                 for view in matching_view
             ]
 
-            if viewlist.__len__() > 0:
-                return jsonify(viewlist), 200
+            if viewList.__len__() > 0:
+                return jsonify(viewList), 200
             else:
-                return jsonify({'error': 'View not found', 'status': '404 Not Found'}), 404
+                ErrorCtrl.error_404('View')
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
 
@@ -162,7 +163,7 @@ class ViewsCtrl:
         if idProfile:
             idProfile = int(idProfile)
             matching_view = db.find({'idProfile': idProfile})
-            viewlist = [
+            viewList = [
                 {
                     'idView': view.get('idView'),
                     'dateInit': view.get('dateInit'),
@@ -174,10 +175,10 @@ class ViewsCtrl:
                 for view in matching_view
             ]
 
-            if viewlist.__len__() > 0:
-                return jsonify(viewlist), 200
+            if viewList.__len__() > 0:
+                return jsonify(viewList), 200
             else:
-                return jsonify({'error': 'View not found', 'status': '404 Not Found'}), 404
+                ErrorCtrl.error_404('View')
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
 
@@ -187,7 +188,7 @@ class ViewsCtrl:
         if idContent:
             idContent = int(idContent)
             matching_view = db.find({'idContent': idContent})
-            viewlist = [
+            viewList = [
                 {
                     'idView': view.get('idView'),
                     'dateInit': view.get('dateInit'),
@@ -199,9 +200,9 @@ class ViewsCtrl:
                 for view in matching_view
             ]
 
-            if viewlist.__len__() > 0:
-                return jsonify(viewlist), 200
+            if viewList.__len__() > 0:
+                return jsonify(viewList), 200
             else:
-                return jsonify({'error': 'View not found', 'status': '404 Not Found'}), 404
+                ErrorCtrl.error_404('View')
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400

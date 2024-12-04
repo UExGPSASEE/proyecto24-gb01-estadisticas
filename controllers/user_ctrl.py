@@ -3,7 +3,7 @@ from pymongo.collection import Collection
 
 from database import get_next_sequence_value as get_next_sequence_value
 from models.user import User
-from clients.users_client import UserClient
+from controllers.error_ctrl import ErrorCtrl
 
 
 class UserCtrl:
@@ -27,7 +27,7 @@ class UserCtrl:
             db.insert_one(user.toDBCollection())
             return redirect(url_for('users'))
         else:
-            return jsonify({'error': 'User not found or not added', 'status': '404 Not Found'}), 404
+            ErrorCtrl.error_404('User')
 
     @staticmethod
     def deleteUser(db: Collection, idUser: int):
@@ -37,7 +37,7 @@ class UserCtrl:
             if result.deleted_count == 1:
                 return redirect(url_for('users'))
             else:
-                return jsonify({'error': 'User not found or not deleted', 'status': '404 Not Found'}), 404
+                ErrorCtrl.error_404('Error')
         else:
             return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
 
