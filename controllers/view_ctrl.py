@@ -54,7 +54,7 @@ class ViewsCtrl:
                 return jsonify({'message': 'New view matches with actual view', 'status': '200 OK'}), 200
             return redirect(url_for('views'))
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()
 
     @staticmethod
     def putViewParam(db: Collection):
@@ -76,7 +76,7 @@ class ViewsCtrl:
             else:
                 ErrorCtrl.error_404('View')
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()
 
     @staticmethod
     def deleteViewParam(db: Collection):
@@ -130,7 +130,7 @@ class ViewsCtrl:
                 else:
                     ErrorCtrl.error_404('View')
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()
 
     @staticmethod
     def getViewsByIdContent(db: Collection):
@@ -155,7 +155,7 @@ class ViewsCtrl:
             else:
                 ErrorCtrl.error_404('View')
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()
 
     @staticmethod
     def getViewsByIdProfile(db: Collection):
@@ -180,7 +180,7 @@ class ViewsCtrl:
             else:
                 ErrorCtrl.error_404('View')
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()
 
     @staticmethod
     def getStatsView(db: Collection):
@@ -205,4 +205,4 @@ class ViewsCtrl:
             else:
                 ErrorCtrl.error_404('View')
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()

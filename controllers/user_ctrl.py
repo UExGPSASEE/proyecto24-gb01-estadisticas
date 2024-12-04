@@ -39,7 +39,7 @@ class UserCtrl:
             else:
                 ErrorCtrl.error_404('Error')
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()
 
     @staticmethod
     def deleteUserParam(db: Collection):

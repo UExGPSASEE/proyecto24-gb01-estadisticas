@@ -36,7 +36,7 @@ class LanguageCtrl:
                 return jsonify({'message': 'New language matches with actual language', 'status': '200 OK'}), 200
             return redirect(url_for('languages'))
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()
 
     @staticmethod
     def putLanguageParam(db: Collection):
@@ -58,7 +58,7 @@ class LanguageCtrl:
             else:
                 ErrorCtrl.error_404('Language')
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()
 
     @staticmethod
     def deleteLanguageParam(db: Collection, idLanguage):
@@ -98,7 +98,7 @@ class LanguageCtrl:
             else:
                 ErrorCtrl.error_404('Language')
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()
 
     @staticmethod
     def getLanguageByName(db: Collection):
@@ -117,4 +117,4 @@ class LanguageCtrl:
             else:
                 ErrorCtrl.error_404('Language')
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()
