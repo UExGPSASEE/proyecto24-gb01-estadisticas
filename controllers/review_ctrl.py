@@ -291,7 +291,7 @@ class ReviewCtrl:
                 for review in matching_review
             ]
             if review_list.__len__() > 0:
-                return jsonify(review_list), 200
+                return jsonify(review_list.len()), 200
             else:
                 ErrorCtrl.error_404('Review')
         else:
