@@ -18,9 +18,10 @@
                 </div>
                 <div class="card-body">
                     <form action="/languages" method="POST">
-                        <label>Nombre del Language</label>
-                        <input type="text" class="form-control mb-3" name="name" required>
-                        <br><br>
+                        <label>Nombre del Language
+                            <input type="text" class="form-control mb-3" name="name" required>
+                            <br><br>
+                        </label>
                         <button class="btn btn-primary" type="submit"> Añadir</button>
                     </form>
                 </div>
@@ -46,8 +47,9 @@
                 <div class="card-body">
                     <form action="/languages/{id_language}" method="POST">
                         <input type="hidden" name="method" value="DELETE">
-                        <label>¿Qué id tiene el Language que deseas borrar?</label>
-                        <input type="number" id="id_language" class="form-control mb-3" name="id_language" required>
+                        <label>¿Qué id tiene el Language que deseas borrar?
+                            <input type="number" id="id_language" class="form-control mb-3" name="id_language" required>
+                        </label>
                         <button class="btn btn-primary" type="submit"> Borrar</button>
                     </form>
                 </div>
