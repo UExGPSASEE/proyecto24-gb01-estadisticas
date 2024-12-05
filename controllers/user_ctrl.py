@@ -20,8 +20,6 @@ class UserCtrl:
 
         if id_user:
             id_user = int(id_user)
-            # user = UserClient.getUser(idUser)
-            # user = User(idUser, user.get('username'), user.get('email'))
             user = User(id_user, username, email)
 
             db.insert_one(user.toDBCollection())
