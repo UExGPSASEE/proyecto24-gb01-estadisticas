@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-#from flask_cors import CORS
+from flask_cors import CORS
 
 import database as dbase
 from controllers.language_ctrl import LanguageCtrl
@@ -12,8 +12,8 @@ db = dbase.conexionMongoDB()
 
 app = Flask(__name__)
 
-# CORS(app)
-#CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})  # CORS restringido al origen React
+CORS(app)
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})  # CORS restringido al origen React
 
 
 # -------------------------------------------------------------------------------------------------------
