@@ -130,7 +130,6 @@ def get_reviews_by_rating():
     return ReviewCtrl.get_reviews_by_rating(db['reviews'])
 
 
-# TODO
 @app.route('/reviews/minrating', methods=['GET'])
 def get_reviews_by_min_rating():
     return ReviewCtrl.get_reviews_by_min_rating(db['reviews'])
