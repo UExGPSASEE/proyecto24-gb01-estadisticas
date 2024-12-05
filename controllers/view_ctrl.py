@@ -201,7 +201,7 @@ class ViewsCtrl:
             ]
 
             if view_list.__len__() > 0:
-                return jsonify(view_list), 200
+                return jsonify(view_list.len()), 200
             else:
                 ErrorCtrl.error_404('View')
         else:
