@@ -27,9 +27,9 @@ class LanguageCtrl:
         name = request.form.get('name')
         if id_language and name:
             id_language = int(id_language)
-            filter = {'id_language': id_language}
+            matching_language = {'id_language': id_language}
             change = {'$set': {'name': name}}
-            result = db.update_one(filter, change)
+            result = db.update_one(matching_language, change)
             if result.matched_count == 0:
                 return ErrorCtrl.error_404('Language')
             elif result.modified_count == 0:

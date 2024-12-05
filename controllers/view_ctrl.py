@@ -45,9 +45,9 @@ class ViewsCtrl:
         date_finish = request.form.get('date_finish')
         if id_view and date_finish:
             id_view = int(id_view)
-            filter = {'id_view': id_view}
+            matching_view = {'id_view': id_view}
             change = {'$set': {'is_finished': True, 'date_finish': date_finish}}
-            result = db.update_one(filter, change)
+            result = db.update_one(matching_view, change)
             if result.matched_count == 0:
                 ErrorCtrl.error_404('View')
             elif result.modified_count == 0:

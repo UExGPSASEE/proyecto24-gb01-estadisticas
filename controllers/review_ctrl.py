@@ -43,7 +43,7 @@ class ReviewCtrl:
         commentary = request.form['commentary']
         if id_review:
             id_review = int(id_review)
-            filter = {'id_review': id_review}
+            matching_review = {'id_review': id_review}
 
             update_fields = {}
 
@@ -51,7 +51,7 @@ class ReviewCtrl:
                 update_fields['rating'] = rating
             if commentary:
                 update_fields['commentary'] = commentary
-            result = db.update_one(filter, update_fields)
+            result = db.update_one(matching_review, update_fields)
             if result.matched_count == 0:
                 ErrorCtrl.error_404('Review')
             elif result.modified_count == 0:
