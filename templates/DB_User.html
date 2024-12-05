@@ -18,18 +18,22 @@
                 </div>
                 <div class="card-body">
                     <form action="/users" method="POST">
-                         <label>ID del User</label>
-                        <input type="number" class="form-control mb-3" name="id_user" required>
-                        <br><br>
-                        <label>Nombre de usuario</label>
-                        <input type="text" class="form-control mb-3" name="username" required>
-                        <br><br>
-                        <label>Email</label>
-                        <input type="email" class="form-control mb-3" name="email" required>
-                        <br><br>
-                        <label>Contraseña</label>
-                        <input type="password" class="form-control mb-3" name="password" required>
-                        <br><br>
+                        <label>ID del User
+                            <input type="number" class="form-control mb-3" name="id_user" required>
+                            <br><br>
+                        </label>
+                        <label>Nombre de usuario
+                            <input type="text" class="form-control mb-3" name="username" required>
+                            <br><br>
+                        </label>
+                        <label>Email
+                            <input type="email" class="form-control mb-3" name="email" required>
+                            <br><br>
+                        </label>
+                        <label>Contraseña
+                            <input type="password" class="form-control mb-3" name="password" required>
+                            <br><br>
+                        </label>
                         <button class="btn btn-primary" type="submit"> Añadir</button>
                     </form>
                 </div>
@@ -40,8 +44,9 @@
                 <div class="card-body">
                     <form action="/users/{id_user}" method="POST">
                         <input type="hidden" name="method" value="DELETE">
-                        <label>¿Qué id tiene el User que deseas borrar?</label>
-                        <input type="number" id="id_user" class="form-control mb-3" name="id_user">
+                        <label>¿Qué id tiene el User que deseas borrar?
+                            <input type="number" id="id_user" class="form-control mb-3" name="id_user">
+                        </label>
                         <button class="btn btn-primary" type="submit"> Borrar</button>
                     </form>
                 </div>

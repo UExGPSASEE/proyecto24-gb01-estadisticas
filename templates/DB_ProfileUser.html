@@ -18,18 +18,22 @@
                 </div>
                 <div class="card-body">
                     <form action="/profiles" method="POST">
-                        <label>Nombre del Profile</label>
-                        <input type="text" class="form-control mb-3" name="name" required>
-                        <br><br>
-                        <label>PIN del Profile</label>
-                        <input type="number" class="form-control mb-3" name="pin" required>
-                        <br><br>
-                        <label>¿A qué usuario se asocia este perfil?</label>
-                        <input type="number" class="form-control mb-3" name="id_user" required>
-                        <br><br>
-                        <label>¿Qué idioma quieres usar?</label>
-                        <input type="number" class="form-control mb-3" name="id_language" required>
-                        <br><br>
+                        <label>Nombre del Profile
+                            <input type="text" class="form-control mb-3" name="name" required>
+                            <br><br>
+                        </label>
+                        <label>PIN del Profile
+                            <input type="number" class="form-control mb-3" name="pin" required>
+                            <br><br>
+                        </label>
+                        <label>¿A qué usuario se asocia este perfil?
+                            <input type="number" class="form-control mb-3" name="id_user" required>
+                            <br><br>
+                        </label>
+                        <label>¿Qué idioma quieres usar?
+                            <input type="number" class="form-control mb-3" name="id_language" required>
+                            <br><br>
+                        </label>
                         <button class="btn btn-primary" type="submit"> Añadir</button>
                     </form>
                 </div>
@@ -40,8 +44,9 @@
                 <div class="card-body">
                     <form action="/profiles/{id_profile}" method="POST">
                         <input type="hidden" name="method" value="DELETE">
-                        <label>¿Qué id tiene el Profile que deseas borrar?</label>
-                        <input type="number" id="id_profile" class="form-control mb-3" name="id_profile">
+                        <label>¿Qué id tiene el Profile que deseas borrar?
+                            <input type="number" id="id_profile" class="form-control mb-3" name="id_profile">
+                        </label>
                         <button class="btn btn-primary" type="submit"> Borrar</button>
                     </form>
                 </div>

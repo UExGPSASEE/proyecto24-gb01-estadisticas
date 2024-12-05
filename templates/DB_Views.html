@@ -18,26 +18,30 @@
                 </div>
                 <div class="card-body">
                     <form action="/views" method="POST">
-                        <label>¿Desde qué perfil estás creando la View?</label>
-                        <input type="number" class="form-control mb-3" name="id_profile" required>
-                        <br><br>
-                        <label>¿De qué contenido quieres hacer la View?</label>
-                        <input type="number" class="form-control mb-3" name="id_content" required>
-                        <br><br>
-                        <label for="content_type">Elige el tipo de contenido:</label>
-                        <select name="content_type" id="content_type">
-                            {% for name, value in content_types %}
-                            <option value="{{ value }}">{{ name }}</option>
-                            {% endfor %}
-                        </select>
-                        <br><br>
-                        <label>¿Cuándo has empezado a verlo?</label>
-                        <input type="date" class="form-control mb-3" id="date_init" name="date_init" required>
-                        <br><br>
-                        <label>¿Cuándo has terminado de verlo?(Opcional)</label>
-                        <input type="date" class="form-control mb-3" id="date_finish" name="date_finish">
-                        <br><br>
-
+                        <label>¿Desde qué perfil estás creando la View?
+                            <input type="number" class="form-control mb-3" name="id_profile" required>
+                            <br><br>
+                        </label>
+                        <label>¿De qué contenido quieres hacer la View?
+                            <input type="number" class="form-control mb-3" name="id_content" required>
+                            <br><br>
+                        </label>
+                        <label for="content_type">Elige el tipo de contenido:
+                            <select name="content_type" id="content_type">
+                                {% for name, value in content_types %}
+                                <option value="{{ value }}">{{ name }}</option>
+                                {% endfor %}
+                            </select>
+                            <br><br>
+                        </label>
+                        <label>¿Cuándo has empezado a verlo?
+                            <input type="date" class="form-control mb-3" id="date_init" name="date_init" required>
+                            <br><br>
+                        </label>
+                        <label>¿Cuándo has terminado de verlo?(Opcional)
+                            <input type="date" class="form-control mb-3" id="date_finish" name="date_finish">
+                            <br><br>
+                        </label>
                         <button class="btn btn-primary" type="submit"> Añadir</button>
                     </form>
                 </div>
@@ -47,12 +51,14 @@
                 <div class="card-body">
                     <form action="/views/{id_view}" method="POST">
                         <input type="hidden" name="method" value="PUT">
-                        <label for="id_view">¿Qué id tiene la View que quieres modificar?</label>
-                        <input type="number" id="id_view" name="id_view" required>
-                        <br><br>
-                        <label>¿Cuándo has terminado de ver el contenido?(Opcional)</label>
-                        <input type="date" class="form-control mb-3" id="date_finish" name="date_finish" required>
-                        <br><br>
+                        <label for="id_view">¿Qué id tiene la View que quieres modificar?
+                            <input type="number" id="id_view" name="id_view" required>
+                            <br><br>
+                        </label>
+                        <label>¿Cuándo has terminado de ver el contenido?(Opcional)
+                            <input type="date" class="form-control mb-3" id="date_finish" name="date_finish" required>
+                            <br><br>
+                        </label>
                         <button class="btn btn-primary" type="submit"> Guardar</button>
                     </form>
                 </div>
@@ -62,8 +68,9 @@
                 <div class="card-body">
                     <form action="/views/{id_view}" method="POST">
                         <input type="hidden" name="method" value="DELETE">
-                        <label>¿Qué id tiene la View que deseas borrar?</label>
-                        <input type="number" id="id_view" class="form-control mb-3" name="id_view">
+                        <label>¿Qué id tiene la View que deseas borrar?
+                            <input type="number" id="id_view" class="form-control mb-3" name="id_view">
+                        </label>
                         <button class="btn btn-primary" type="submit"> Borrar</button>
                     </form>
                 </div>
@@ -81,8 +88,9 @@
                 </div>
                 <div class="card-body">
                     <form action="/views/{id_view}" method="GET">
-                        <label>¿Qué view deseas buscar?</label>
-                        <input type="number" class="form-control mb-3" name="id_view" required>
+                        <label>¿Qué view deseas buscar?
+                            <input type="number" class="form-control mb-3" name="id_view" required>
+                        </label>
                         <button class="btn btn-primary" type="submit"> Buscar</button>
                     </form>
                 </div>
@@ -91,15 +99,17 @@
                 </div>
                 <div class="card-body">
                     <form action="/views/contents" method="GET">
-                        <label>¿Sobre qué contenido deseas buscar la View?</label>
-                        <input type="number" class="form-control mb-3" name="id_content" required>
+                        <label>¿Sobre qué contenido deseas buscar la View?
+                            <input type="number" class="form-control mb-3" name="id_content" required>
+                        </label>
                         <button class="btn btn-primary" type="submit"> Buscar</button>
                     </form>
                 </div>
                 <div class="card-body">
                     <form action="/views/profiles" method="GET">
-                        <label>¿Sobre qué perfil deseas buscar la View?</label>
-                        <input type="number" class="form-control mb-3" name="id_profile" required>
+                        <label>¿Sobre qué perfil deseas buscar la View?
+                            <input type="number" class="form-control mb-3" name="id_profile" required>
+                        </label>
                         <button class="btn btn-primary" type="submit"> Buscar</button>
                     </form>
                 </div>
@@ -108,8 +118,9 @@
                 </div>
                 <div class="card-body">
                     <form action="/views/stats" method="GET">
-                        <label>¿Sobre qué contenido deseas buscar la View?</label>
-                        <input type="number" class="form-control mb-3" name="id_content" required>
+                        <label>¿Sobre qué contenido deseas buscar la View?
+                            <input type="number" class="form-control mb-3" name="id_content" required>
+                        </label>
                         <button class="btn btn-primary" type="submit"> Buscar</button>
                     </form>
                 </div>
