@@ -5,48 +5,48 @@ class ContenidosClient:
     BASE_URL = "http://127.0.0.1:8082"
 
     @staticmethod
-    def getMovie(idMovie):
-        url = f"{ContenidosClient.BASE_URL}/movies/{idMovie}"
+    def get_movie(id_movie):
+        url = f"{ContenidosClient.BASE_URL}/movies/{id_movie}"
         response = requests.get(url)
-        return ContenidosClient.handleResponse(response)
+        return ContenidosClient.handle_response(response)
 
     @staticmethod
-    def getCategory(idCategory):
-        url = f"{ContenidosClient.BASE_URL}/categories/{idCategory}"
+    def get_category(id_category):
+        url = f"{ContenidosClient.BASE_URL}/categories/{id_category}"
         response = requests.get(url)
-        return ContenidosClient.handleResponse(response)
+        return ContenidosClient.handle_response(response)
 
     @staticmethod
-    def getSeries(idSeries):
-        url = f"{ContenidosClient.BASE_URL}/series/{idSeries}"
+    def get_series(id_series):
+        url = f"{ContenidosClient.BASE_URL}/series/{id_series}"
         response = requests.get(url)
-        return ContenidosClient.handleResponse(response)
+        return ContenidosClient.handle_response(response)
 
     @staticmethod
-    def getSeason(idSeason):
-        url = f"{ContenidosClient.BASE_URL}/seasons/{idSeason}"
+    def get_season(id_season):
+        url = f"{ContenidosClient.BASE_URL}/seasons/{id_season}"
         response = requests.get(url)
-        return ContenidosClient.handleResponse(response)
+        return ContenidosClient.handle_response(response)
 
     @staticmethod
-    def handleResponse(response):
+    def handle_response(response):
         if response.status_code == 200:
             return response.json()
         else:
             response.raise_for_status()
 
     @staticmethod
-    def checkContentExists(idContent: int, contentType):
+    def check_content_exists(id_content: int, content_type):
         found = False
 
-        if contentType == 1:
-            url = f"{ContenidosClient.BASE_URL}/movies/{idContent}"
-        elif contentType == 2:
-            url = f"{ContenidosClient.BASE_URL}/series/{idContent}"
-        elif contentType == 3:
-            url = f"{ContenidosClient.BASE_URL}/series/{idContent}"
-        elif contentType == 4:
-            url = f"{ContenidosClient.BASE_URL}/categories/{idContent}"
+        if content_type == 1:
+            url = f"{ContenidosClient.BASE_URL}/movies/{id_content}"
+        elif content_type == 2:
+            url = f"{ContenidosClient.BASE_URL}/series/{id_content}"
+        elif content_type == 3:
+            url = f"{ContenidosClient.BASE_URL}/series/{id_content}"
+        elif content_type == 4:
+            url = f"{ContenidosClient.BASE_URL}/categories/{id_content}"
         else:
             return False
 

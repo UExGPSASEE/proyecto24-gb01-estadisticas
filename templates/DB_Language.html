@@ -18,9 +18,10 @@
                 </div>
                 <div class="card-body">
                     <form action="/languages" method="POST">
-                        <label>Nombre del Language</label>
-                        <input type="text" class="form-control mb-3" name="name" required>
-                        <br><br>
+                        <label>Nombre del Language
+                            <input type="text" class="form-control mb-3" name="name" required>
+                            <br><br>
+                        </label>
                         <button class="btn btn-primary" type="submit"> Añadir</button>
                     </form>
                 </div>
@@ -29,10 +30,10 @@
                     <h5 class="text-center">Modificar Language</h5>
                 </div>
                 <div class="card-body">
-                    <form action="/languages/languageUpdated" method="POST">
+                    <form action="/languages/{id_language}" method="POST">
                         <input type="hidden" name="method" value="PUT">
-                        <label for="idLanguage">¿Qué id tiene el Language que quieres modificar?</label>
-                        <input type="number" id="idLanguage" name="idLanguage" required>
+                        <label for="id_language">¿Qué id tiene el Language que quieres modificar?</label>
+                        <input type="number" id="id_language" name="id_language" required>
                         <br><br>
                         <label for="name">¿por qué nombre deseas cambiarlo?</label>
                         <input type="text" id="name" name="name" required>
@@ -44,10 +45,11 @@
                     <h5 class="text-center">Borrar Language</h5>
                 </div>
                 <div class="card-body">
-                    <form action="/languages/languageDeleted" method="POST">
+                    <form action="/languages/{id_language}" method="POST">
                         <input type="hidden" name="method" value="DELETE">
-                        <label>¿Qué id tiene el Language que deseas borrar?</label>
-                        <input type="number" id="idLanguage" class="form-control mb-3" name="idLanguage" required>
+                        <label>¿Qué id tiene el Language que deseas borrar?
+                            <input type="number" id="id_language" class="form-control mb-3" name="id_language" required>
+                        </label>
                         <button class="btn btn-primary" type="submit"> Borrar</button>
                     </form>
                 </div>

@@ -8,42 +8,42 @@ from controllers.error_ctrl import ErrorCtrl
 class ProfileCtrl:
     @staticmethod
     def render_template(db: Collection):
-        profilesReceived = db.find()
-        return render_template('DB_ProfileUser.html', profiles=profilesReceived)
+        profiles_received = db.find()
+        return render_template('DB_ProfileUser.html', profiles=profiles_received)
 
     @staticmethod
-    def addProfile(db: Collection):
-        idProfile = get_next_sequence_value(db, "idProfile")
+    def add_profile(db: Collection):
+        id_profile = get_next_sequence_value(db, "id_profile")
         name = request.form.get('name')
-        idUser = request.form.get('idUser')
-        idLanguage = request.form.get('idLanguage')
+        id_user = request.form.get('id_user')
+        id_language = request.form.get('id_language')
 
-        if idProfile:
-            idProfile = int(idProfile)
-            profileUser = ProfileUser(idProfile, str(name), int(idUser), int(idLanguage))
-            db.insert_one(profileUser.toDBCollection())
+        if id_profile:
+            id_profile = int(id_profile)
+            profile_user = ProfileUser(id_profile, str(name), int(id_user), int(id_language))
+            db.insert_one(profile_user.toDBCollection())
             return redirect(url_for('profiles'))
         else:
             ErrorCtrl.error_404('Profile')
 
     @staticmethod
-    def deleteProfile(db: Collection, idProfile: int):
-        if idProfile:
-            idProfile = int(idProfile)
-            result = db.delete_one({'idProfile': idProfile})
+    def delete_profile(db: Collection, id_profile: int):
+        if id_profile:
+            id_profile = int(id_profile)
+            result = db.delete_one({'id_profile': id_profile})
             if result.deleted_count == 1:
                 return redirect(url_for('profiles'))
             else:
                 ErrorCtrl.error_404('Profile')
         else:
-            return jsonify({'error': 'Missing data or incorrect method', 'status': '400 Bad Request'}), 400
+            ErrorCtrl.error_400()
 
     @staticmethod
-    def deleteProfileParam(db: Collection):
-        idProfile = int(request.args.get('idProfile'))
-        return ProfileCtrl.deleteProfile(db, idProfile)
+    def delete_profile_param(db: Collection):
+        id_profile = int(request.args.get('id_profile'))
+        return ProfileCtrl.delete_profile(db, id_profile)
 
     @staticmethod
-    def deleteProfileForm(db: Collection):
-        idProfile = int(request.form.get('idProfile'))
-        return ProfileCtrl.deleteProfile(db, idProfile)
+    def delete_profile_form(db: Collection):
+        id_profile = int(request.form.get('id_profile'))
+        return ProfileCtrl.delete_profile(db, id_profile)

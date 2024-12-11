@@ -1,18 +1,18 @@
 class Review:
-    def __init__(self, idReview, rating, commentary, idProfile, idContent, typeContent):
-        self.idReview = idReview
+    def __init__(self, id_review, rating, commentary, id_profile, id_content, type_content):
+        self.id_review = id_review
         self.rating = rating
         self.commentary = commentary
-        self.idProfile = idProfile
-        self.idContent = idContent
-        self.typeContent = typeContent
+        self.id_profile = id_profile
+        self.id_content = id_content
+        self.type_content = type_content
 
     def toDBCollection(self):
         return {
-            'idReview': self.idReview,
+            'id_review': self.id_review,
             'rating': self.rating,
             'commentary': self.commentary,
-            'idProfile': self.idProfile,
-            'idContent': self.idContent,
-            'typeContent': self.typeContent
+            'id_profile': self.id_profile,
+            'id_content': self.id_content,
+            'type_content': self.type_content
         }
